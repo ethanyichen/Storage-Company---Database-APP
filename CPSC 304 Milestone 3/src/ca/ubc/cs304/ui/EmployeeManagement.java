@@ -19,6 +19,10 @@ public class EmployeeManagement implements ActionListener {
     private JButton searchB;
     private JTextField eID;
     private JLabel searchError;
+    private JButton deleteB;
+    private JTextField eNameDel;
+    private JLabel deleteConfirmation;
+    private JButton eDirec;
 
 
     public EmployeeManagement() {
@@ -109,17 +113,22 @@ public class EmployeeManagement implements ActionListener {
         deleteEName.setBounds(10,330,100,25);
         ePanel.add(deleteEName);
 
-        JTextField eNameDel = new JTextField();
+        eNameDel = new JTextField();
         eNameDel.setBounds(120,330,180,25);
         ePanel.add(eNameDel);
 
-        JButton deleteB = new JButton("Delete");
+        deleteB  = new JButton("Delete");
         deleteB.setBounds(310,330,80,25);
         deleteB.addActionListener(this);
         ePanel.add(deleteB);
 
-        JButton eDirec = new JButton("Employee Directories");
+        deleteConfirmation = new JLabel("");
+        deleteConfirmation.setBounds(100,360,400,25);
+        ePanel.add(deleteConfirmation);
+
+        eDirec = new JButton("Employee Directories");
         eDirec.setBounds(150,410,300,25);
+        eDirec.addActionListener(this);
         ePanel.add(eDirec);
 
 
@@ -135,12 +144,18 @@ public class EmployeeManagement implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         //search button
         if (e.getSource() == searchB) {
+            searchError.setText("");
             int emID = -1;
             String stringID = eID.getText();
             if (stringID.matches("[0-9]+") && stringID.length() > 0) {
                 emID = Integer.parseInt(stringID);
             }
             EmployeeDetails employeeDetails = new EmployeeDetails(emID);
+            //TODO deal with fail
+            if (emID == -1) {
+                searchError.setText("Invalid input");
+            }
+            eID.setText("");
         }
 
         //add button
@@ -151,7 +166,7 @@ public class EmployeeManagement implements ActionListener {
             if (eSalaryString.matches("[0-9]+") && eSalaryString.length() > 0) {
                 eSalaryIn= Integer.parseInt(eSalaryString);
             }
-            //TODO generate Random EmployeeID, how to deal with duplicates
+            //TODO generate new EmployeeID, how to deal with duplicated adds
             String addMsg;
             String addMsgID;
             if (eNameIn.equals("")|eSalaryIn==-1) {
@@ -162,12 +177,28 @@ public class EmployeeManagement implements ActionListener {
                 addMsgID = "EmployeeID Assigned = ...";
             }
             addConfirmation.setText(addMsg);
+            eName.setText("");
+            eSalary.setText("");
             addConfirmationID.setText(addMsgID);
         }
 
         //delete button
-        if (e.getSource() == addB) {
+        //TODO fail case
+        if (e.getSource() == deleteB) {
+            String eNameIn = eNameDel.getText();
+            String deleteMsg;
+            if(eNameIn.equals(""))
+                deleteMsg="Invalid input";
+            else
+                deleteMsg="Employee \"" +eNameIn+ "\" successfully deleted from Database.";
+            deleteConfirmation.setText(deleteMsg);
+            eNameDel.setText("");
+        }
 
+        //directory button
+        if (e.getSource() == eDirec) {
+            System.out.print(1);
+            EmployeeDirectory employeeDirectory = new EmployeeDirectory();
         }
 
     }

@@ -99,6 +99,7 @@ public class EmployeeDetails implements ActionListener {
             else
                 confirmation = "Salary updated to $" +newSalInt+ " for employee (ID): " +eIDInt ;
             updateConfirmation.setText(confirmation);
+            newSalary.setText("");
         }
     }
 }
