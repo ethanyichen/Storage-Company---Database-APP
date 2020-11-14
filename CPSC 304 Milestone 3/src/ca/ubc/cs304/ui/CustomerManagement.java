@@ -1,19 +1,12 @@
 package ca.ubc.cs304.ui;
 
 import javax.swing.*;
-import javax.swing.text.StyledEditorKit;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CustomerManagement implements ActionListener {
 
-    public static void main(String[] args) {
-        CustomerManagement customerManagement = new CustomerManagement();
-        customerManagement.customerManagement();
-    }
-
-    private int count = 0;
     private JFrame cFrame;
     private JLabel cLabel;
     private JPanel cPanel;
@@ -22,7 +15,6 @@ public class CustomerManagement implements ActionListener {
     private JTextField cName;
     private JTextField cPhoneNum;
     private JButton submit;
-    private JLabel addConfirmation;
     private JLabel submitMessege;
     private JButton search;
     private JLabel searchError;
@@ -32,6 +24,10 @@ public class CustomerManagement implements ActionListener {
     private JButton cDirec;
     private JButton memberOfAll;
 
+    public static void main(String[] args) {
+        CustomerManagement customerManagement = new CustomerManagement();
+        customerManagement.customerManagement();
+    }
 
     public void customerManagement() {
 
