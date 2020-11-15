@@ -24,16 +24,13 @@ public class CustomerManagement implements ActionListener {
     private JButton cDirec;
     private JButton memberOfAll;
 
-    public static void main(String[] args) {
-        CustomerManagement customerManagement = new CustomerManagement();
-        customerManagement.customerManagement();
-    }
+    private int CUSTOMER_ID_DB;
+
 
     public void customerManagement() {
 
         cPanel = new JPanel();
         cFrame = new JFrame("Customer Management");
-        cFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cFrame.add(cPanel, BorderLayout.CENTER);
 
         cPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
@@ -42,6 +39,7 @@ public class CustomerManagement implements ActionListener {
         JLabel title = new JLabel("Customer Mangement");
         title.setBounds(150,15,300,30);
         Font f = new Font("serif", Font.BOLD, 30);
+
         title.setFont(f);
         cPanel.add(title);
 
@@ -69,6 +67,7 @@ public class CustomerManagement implements ActionListener {
 
         submit = new JButton("Submit");
         submit.setBounds(310,110,80,25);
+        submit.setFont(newCustomer.getFont().deriveFont(Font.BOLD));
         cPanel.add(submit);
         cLabel = new JLabel();
         cPanel.add(cLabel);
@@ -106,6 +105,7 @@ public class CustomerManagement implements ActionListener {
         search = new JButton("Search");
         search.setBounds(300,210,80,25);
         search.addActionListener(this);
+        search.setFont(newCustomer.getFont().deriveFont(Font.BOLD));
         cPanel.add(search);
 
         searchError = new JLabel("");
@@ -113,19 +113,38 @@ public class CustomerManagement implements ActionListener {
         cPanel.add(searchError);
 
         cDirec = new JButton("Customer Directories");
-        cDirec.setBounds(150,270,300,25);
+        cDirec.setBounds(100,260,370,50);
+        cDirec.setFont(newCustomer.getFont().deriveFont(Font.BOLD));
         cDirec.addActionListener(this);
         cPanel.add(cDirec);
 
-        memberOfAll = new JButton("Customer that is member of all warehouse");
-        memberOfAll.setBounds(150,300,300,25);
+        memberOfAll = new JButton("Customer That is Member of Every Warehouse");
+        memberOfAll.setBounds(100,320,370,50);
+        memberOfAll.setFont(newCustomer.getFont().deriveFont(Font.BOLD));
         memberOfAll.addActionListener(this);
         cPanel.add(memberOfAll);
 
         activeCustomer = new JButton("Active Customers");
-        activeCustomer.setBounds(150,330,300,25);
+        activeCustomer.setBounds(100,380,370,50);
+        activeCustomer.setFont(newCustomer.getFont().deriveFont(Font.BOLD));
         activeCustomer.addActionListener(this);
         cPanel.add(activeCustomer);
+
+
+        title.setForeground(Color.decode("#222D6D"));
+        cPanel.setBackground(Color.decode("#E5F1F6"));
+        submit.setForeground(Color.decode("#222D6D"));
+        search.setForeground(Color.decode("#222D6D"));
+        activeCustomer.setForeground(Color.decode("#222D6D"));
+        cDirec.setForeground(Color.decode("#222D6D"));
+        memberOfAll.setForeground(Color.decode("#222D6D"));
+        newCustomer.setForeground(Color.decode("#222D6D"));
+        customerIDLabel.setForeground(Color.decode("#222D6D"));
+        name.setForeground(Color.decode("#222D6D"));
+        phoneNum.setForeground(Color.decode("#222D6D"));
+        line.setForeground(Color.decode("#222D6D"));
+        searchCustomer.setForeground(Color.decode("#222D6D"));
+
 
         cFrame.pack();
         cFrame.setSize(600,500);
@@ -142,13 +161,17 @@ public class CustomerManagement implements ActionListener {
             if (cID_TEXT.matches("[0-9]+") && cID_TEXT.length() > 0) {
                 cID_INT = Integer.parseInt(cID_TEXT);
             }
-            //TODO trigger new screen
-//            CustomerDetails employeeDetails = new CustomerDetails(cID_INT);
             //TODO deal with search no results
-            if (cID_INT == -1) {
-                searchError.setText("Invalid input");
-            }
+//            if (cID_INT == -1 OR not found) {
+//                searchError.setText("Invalid input");
+//            } else{
+                CUSTOMER_ID_DB = cID_INT;
+//            }
+
+            //TODO trigger new screen
             cID.setText("");
+            CustomerDetails customerDetails = new CustomerDetails(CUSTOMER_ID_DB);
+            customerDetails.customerDetials();
         }
 
         //submit button
@@ -179,18 +202,18 @@ public class CustomerManagement implements ActionListener {
 
         //directory button
         if (e.getSource() == cDirec) {
-            //TODO trigger directory screen
-//            customerDirectory customerDirectory = new CustomerDirectory("Directory");
+            Directory customerDirectory = new Directory("Customer Directories:");
+            customerDirectory.directory();
         }
 
         if (e.getSource() == memberOfAll) {
-            //TODO trigger directory screen
-//            customerDirectory customerDirectory = new CustomerDirectory("memberOfAll");
+            Directory customerDirectory = new Directory("Customer That is Member of Every Warehouse");
+            customerDirectory.directory();
         }
 
         if (e.getSource() == activeCustomer) {
-            //TODO trigger directory screen
-//            customerDirectory customerDirectory = new CustomerDirectory("activeCustomer");
+            Directory customerDirectory = new Directory("Active Customer Directories:");
+            customerDirectory.directory();
         }
 
     }

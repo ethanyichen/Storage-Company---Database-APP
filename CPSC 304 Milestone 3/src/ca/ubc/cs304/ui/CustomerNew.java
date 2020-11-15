@@ -15,7 +15,7 @@ public class CustomerNew implements Runnable {
         panel = new JPanel();
         frame.add(panel);
         frame.setPreferredSize(new Dimension(600, 175));
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         createComponents(frame.getContentPane());
         frame.pack();
         frame.setVisible(true);

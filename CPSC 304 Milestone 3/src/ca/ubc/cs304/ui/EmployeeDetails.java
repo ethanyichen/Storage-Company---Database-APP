@@ -16,8 +16,7 @@ public class EmployeeDetails implements ActionListener {
 
     EmployeeDetails(int emID){
         panel = new JPanel();
-        frame = new JFrame("Employee Details");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame = new JFrame("Employee Management");
         frame.add(panel, BorderLayout.CENTER);
 
         panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));

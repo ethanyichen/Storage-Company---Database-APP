@@ -25,11 +25,10 @@ public class EmployeeManagement implements ActionListener {
     private JButton eDirec;
 
 
-    public EmployeeManagement() {
+    public void employeeManagement() {
 
         ePanel = new JPanel();
         eFrame = new JFrame("Employee Management");
-        eFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         eFrame.add(ePanel, BorderLayout.CENTER);
 
         ePanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
@@ -137,9 +136,6 @@ public class EmployeeManagement implements ActionListener {
         eFrame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new EmployeeManagement();
-    }
 
     public void actionPerformed(ActionEvent e) {
         //search button
@@ -197,8 +193,8 @@ public class EmployeeManagement implements ActionListener {
 
         //directory button
         if (e.getSource() == eDirec) {
-            System.out.print(1);
-            EmployeeDirectory employeeDirectory = new EmployeeDirectory();
+            Directory directory = new Directory("Employee Directories");
+            directory.directory();
         }
 
     }
