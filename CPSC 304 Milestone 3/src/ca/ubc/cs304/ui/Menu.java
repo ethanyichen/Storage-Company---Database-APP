@@ -20,6 +20,7 @@ public class Menu implements ActionListener {
         panel = new JPanel();
         frame = new JFrame("Storage Management -- Main Menu");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.add(panel, BorderLayout.CENTER);
 
         panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
