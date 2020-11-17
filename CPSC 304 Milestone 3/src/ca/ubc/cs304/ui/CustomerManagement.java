@@ -37,7 +37,7 @@ public class CustomerManagement implements ActionListener {
         cPanel.setLayout(null);
 
         JLabel title = new JLabel("Customer Mangement");
-        title.setBounds(150,15,300,30);
+        title.setBounds(150,15,300,40);
         Font f = new Font("serif", Font.BOLD, 30);
 
         title.setFont(f);
@@ -145,6 +145,8 @@ public class CustomerManagement implements ActionListener {
         line.setForeground(Color.decode("#222D6D"));
         searchCustomer.setForeground(Color.decode("#222D6D"));
 
+        submitMessege.setForeground(Color.decode("#990000"));
+        submitIDMessege.setForeground(Color.decode("#990000"));
 
         cFrame.pack();
         cFrame.setSize(600,500);

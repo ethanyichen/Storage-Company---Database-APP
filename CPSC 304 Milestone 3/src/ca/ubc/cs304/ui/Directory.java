@@ -26,7 +26,7 @@ public class Directory {
         cPanel.setLayout(null);
 
         JLabel title = new JLabel("Directory");
-        title.setBounds(10,15,300,30);
+        title.setBounds(10,15,300,40);
         Font f = new Font("serif", Font.BOLD, 20);
         title.setFont(f);
         cPanel.add(title);

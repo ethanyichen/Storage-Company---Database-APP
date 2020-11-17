@@ -27,7 +27,7 @@ public class Menu implements ActionListener {
         panel.setLayout(null);
 
         JLabel title = new JLabel("Storage Management");
-        title.setBounds(175,15,300,30);
+        title.setBounds(175,15,300,40);
         Font f = new Font("Serif", Font.BOLD, 30);
 
         title.setFont(f);

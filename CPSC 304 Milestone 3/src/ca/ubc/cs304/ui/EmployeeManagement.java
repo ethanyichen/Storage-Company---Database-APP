@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 public class EmployeeManagement implements ActionListener {
     private int count = 0;
+    private JLabel title;
     private JFrame eFrame;
     private JLabel eLabel;
     private JPanel ePanel;
@@ -23,6 +24,18 @@ public class EmployeeManagement implements ActionListener {
     private JTextField eNameDel;
     private JLabel deleteConfirmation;
     private JButton eDirec;
+    private JLabel searchT;
+    private JLabel search;
+    private JLabel line;
+    private  JLabel addT;
+    private JLabel addE;
+    private  JLabel addES;
+    private JLabel line1;
+    private  JLabel deleteE;
+    private JLabel deleteEName;
+
+
+
 
 
     public void employeeManagement() {
@@ -34,21 +47,28 @@ public class EmployeeManagement implements ActionListener {
         ePanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         ePanel.setLayout(null);
 
+        title = new JLabel("Employee Management");
+        title.setBounds(120,15,400,40);
+        Font f = new Font("serif", Font.BOLD, 30);
+        title.setFont(f);
+        ePanel.add(title);
+
+
         //Search Employee
-        JLabel searchT = new JLabel("Search Employee");
-        searchT.setBounds(10,50,165,25);
+        searchT = new JLabel("Search Employee");
+        searchT.setBounds(10,60,150,25);
         ePanel.add(searchT);
 
-        JLabel search = new JLabel("EmployeeID");
-        search.setBounds(10,80,80,25);
+        search = new JLabel("EmployeeID");
+        search.setBounds(10,90,80,25);
         ePanel.add(search);
 
         eID = new JTextField();
-        eID.setBounds(120,80,180,25);
+        eID.setBounds(120,90,180,25);
         ePanel.add(eID);
 
         searchB = new JButton("Search");
-        searchB.setBounds(310,80,80,25);
+        searchB.setBounds(310,90,80,25);
         //change on submit
         searchB.addActionListener(this);
         ePanel.add(searchB);
@@ -56,59 +76,59 @@ public class EmployeeManagement implements ActionListener {
         ePanel.add(eLabel);
 
         searchError = new JLabel("");
-        searchError.setBounds(150,100,200,25);
+        searchError.setBounds(170,110,200,25);
         ePanel.add(searchError);
 
         //Horizontal Line
-        JLabel line = new JLabel("_______________________________________________________________________________________");
+        line = new JLabel("_______________________________________________________________________________________");
         line.setBounds(10,120,580,25);
         ePanel.add(line);
 
         //Add Employee
-        JLabel addT = new JLabel("Add Employee");
-        addT.setBounds(10,140,165,25);
+        addT = new JLabel("Add Employee");
+        addT.setBounds(10,150,165,25);
         ePanel.add(addT);
 
-        JLabel addE = new JLabel("Employee Name");
-        addE.setBounds(10,170,100,25);
+        addE = new JLabel("Employee Name");
+        addE.setBounds(10,180,100,25);
         ePanel.add(addE);
 
         eName = new JTextField();
-        eName.setBounds(120,170,180,25);
+        eName.setBounds(120,180,180,25);
         ePanel.add(eName);
 
-        JLabel addES = new JLabel("Salary ($)");
-        addES.setBounds(315,170,70,25);
+        addES = new JLabel("Salary ($)");
+        addES.setBounds(315,180,70,25);
         ePanel.add(addES);
 
         eSalary = new JTextField();
-        eSalary.setBounds(385,170,120,25);
+        eSalary.setBounds(385,180,120,25);
         ePanel.add(eSalary);
 
         addB = new JButton("Add");
-        addB.setBounds(245,200,80,25);
+        addB.setBounds(245,210,80,25);
         addB.addActionListener(this);
         ePanel.add(addB);
 
         addConfirmation = new JLabel("");
-        addConfirmation.setBounds(75,230,475,25);
+        addConfirmation.setBounds(75,240,475,25);
         ePanel.add(addConfirmation);
 
         addConfirmationID = new JLabel("");
-        addConfirmationID.setBounds(150,260,200,25);
+        addConfirmationID.setBounds(150,270,200,25);
         ePanel.add(addConfirmationID);
 
         //Horizontal Line
-        JLabel line1 = new JLabel("_______________________________________________________________________________________");
-        line1.setBounds(10,270,580,25);
+        line1 = new JLabel("_______________________________________________________________________________________");
+        line1.setBounds(10,280,580,25);
         ePanel.add(line1);
 
         //Delete employee
-        JLabel deleteE = new JLabel("Delete Employee");
+        deleteE = new JLabel("Delete Employee");
         deleteE.setBounds(10,300,165,25);
         ePanel.add(deleteE);
 
-        JLabel deleteEName = new JLabel("Employee Name");
+        deleteEName = new JLabel("Employee Name");
         deleteEName.setBounds(10,330,100,25);
         ePanel.add(deleteEName);
 
@@ -122,13 +142,39 @@ public class EmployeeManagement implements ActionListener {
         ePanel.add(deleteB);
 
         deleteConfirmation = new JLabel("");
-        deleteConfirmation.setBounds(100,360,400,25);
+        deleteConfirmation.setBounds(120,360,400,25);
         ePanel.add(deleteConfirmation);
 
         eDirec = new JButton("Employee Directories");
         eDirec.setBounds(150,410,300,25);
         eDirec.addActionListener(this);
         ePanel.add(eDirec);
+
+        ePanel.setBackground(Color.decode("#E5F1F6"));
+
+        title.setForeground(Color.decode("#222D6D"));
+        deleteB.setForeground(Color.decode("#222D6D"));
+        eDirec.setForeground(Color.decode("#222D6D"));
+        searchB.setForeground(Color.decode("#222D6D"));
+        addB.setForeground(Color.decode("#222D6D"));
+        search.setForeground(Color.decode("#222D6D"));
+        searchT.setForeground(Color.decode("#222D6D"));
+        line.setForeground(Color.decode("#222D6D"));
+        addT.setForeground(Color.decode("#222D6D"));
+        addE.setForeground(Color.decode("#222D6D"));
+        addES.setForeground(Color.decode("#222D6D"));
+        line1.setForeground(Color.decode("#222D6D"));
+        deleteE.setForeground(Color.decode("#222D6D"));
+        deleteEName.setForeground(Color.decode("#222D6D"));
+        deleteConfirmation.setForeground(Color.decode("#222D6D"));
+        searchError.setForeground(Color.decode("#222D6D"));
+        eLabel.setForeground(Color.decode("#222D6D"));
+
+        addConfirmationID.setForeground(Color.decode("#990000"));
+        addConfirmation.setForeground(Color.decode("#990000"));
+        searchError.setForeground(Color.decode("#990000"));
+        deleteConfirmation.setForeground(Color.decode("#990000"));
+
 
 
         eFrame.pack();

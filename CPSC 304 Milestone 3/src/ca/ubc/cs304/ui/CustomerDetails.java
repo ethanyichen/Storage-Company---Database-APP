@@ -29,14 +29,14 @@ public class CustomerDetails implements ActionListener {
 
     public void customerDetials(){
         cPanel = new JPanel();
-        cFrame = new JFrame("Customer Management");
+        cFrame = new JFrame("Customer Details");
         cFrame.add(cPanel, BorderLayout.CENTER);
 
         cPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         cPanel.setLayout(null);
 
-        JLabel title = new JLabel("Customer Mangement");
-        title.setBounds(150,15,300,30);
+        JLabel title = new JLabel("Customer Details");
+        title.setBounds(10,15,400,40);
         Font f = new Font("serif", Font.BOLD, 30);
         title.setFont(f);
         cPanel.add(title);
@@ -94,8 +94,10 @@ public class CustomerDetails implements ActionListener {
         title.setForeground(Color.decode("#222D6D"));
         name.setForeground(Color.decode("#222D6D"));
         cID.setForeground(Color.decode("#222D6D"));
+
         cPanel.setBackground(Color.decode("#E5F1F6"));
         rPanel.setBackground(Color.decode("#E5F1F6"));
+
         currentStorage.setForeground(Color.decode("#222D6D"));
         newMemberShip.setForeground(Color.decode("#222D6D"));
         currentMembership.setForeground(Color.decode("#222D6D"));
