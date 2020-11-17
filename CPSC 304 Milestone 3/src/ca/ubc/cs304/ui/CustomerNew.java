@@ -14,6 +14,8 @@ public class CustomerNew implements ActionListener {
     private JButton submit;
     private JButton submit1;
     private JTextField date;
+    private JLabel out;
+    private JLabel out1;
 
     public void CustomerNew(){
         panel = new JPanel();
@@ -54,32 +56,42 @@ public class CustomerNew implements ActionListener {
         panel.add(submit);
         submit.addActionListener(this);
 
+        out = new JLabel("");
+        out.setBounds(200, 130, 300, 25);
+        panel.add(out);
+
         JLabel line = new JLabel("_______________________________________________________________________________________");
-        line.setBounds(10,140,600,15);
+        line.setBounds(10,150,600,15);
         panel.add(line);
 
         JLabel selectWare = new JLabel("Select Warehouse:");
-        selectWare.setBounds(10, 170, 120, 25);
+        selectWare.setBounds(10, 190, 120, 25);
         panel.add(selectWare);
 
         JComboBox<String> choose = new JComboBox<String>();
-        choose.setBounds(140, 170, 60, 25);
+        choose.setBounds(140, 190, 60, 25);
         panel.add(choose);
 
         JLabel dateDesc = new JLabel("Start Date:");
-        dateDesc.setBounds(10, 200, 120, 25);
+        dateDesc.setBounds(10, 220, 120, 25);
         panel.add(dateDesc);
 
         date = new JTextField();
-        date.setBounds(140,200,120,25);
+        date.setBounds(140,220,120,25);
         panel.add(date);
 
         submit1 = new JButton("Submit");
-        submit.setBounds(280,200,80,25);
+        submit.setBounds(280,220,80,25);
         panel.add(submit1);
         submit1.addActionListener(this);
 
+        out1 = new JLabel("");
+        out1.setBounds(200, 240, 300, 25);
+        panel.add(out1);
+
         title.setForeground(Color.decode("#222D6D"));
+        out.setForeground(Color.decode("#990000"));
+        out1.setForeground(Color.decode("#990000"));
         panel.setBackground(Color.decode("#E5F1F6"));
         submit.setForeground(Color.decode("#222D6D"));
         submit1.setForeground(Color.decode("#222D6D"));
@@ -102,7 +114,7 @@ public class CustomerNew implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        // TODO add cases for wrong inputs
 
     }
 }

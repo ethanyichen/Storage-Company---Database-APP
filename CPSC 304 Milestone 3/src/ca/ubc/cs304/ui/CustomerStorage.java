@@ -16,6 +16,8 @@ public class CustomerStorage implements ActionListener {
     private JTextField fee;
     private JTextField start;
     private JTextField end;
+    private JLabel out;
+    private JLabel out1;
 
 
     public void CustomerStorage(){
@@ -50,50 +52,65 @@ public class CustomerStorage implements ActionListener {
         id.setBounds(70,110,180,25);
         panel.add(id);
 
+
         submit = new JButton("Submit");
         submit.setBounds(260,110,80,25);
         panel.add(submit);
         submit.addActionListener(this);
 
+        out = new JLabel("");
+        out.setBounds(200, 135, 300, 25);
+        panel.add(out);
+
+        JLabel line = new JLabel("_______________________________________________________________________________________");
+        line.setBounds(10,150,600,15);
+        panel.add(line);
+
         JLabel selectWare = new JLabel("Select Warehouse:");
-        selectWare.setBounds(10, 170, 120, 25);
+        selectWare.setBounds(10, 190, 120, 25);
         panel.add(selectWare);
 
         JComboBox<String> choose = new JComboBox<String>();
-        choose.setBounds(140, 170, 100, 25);
+        choose.setBounds(140, 190, 100, 25);
         panel.add(choose);
 
         JLabel feeDesc = new JLabel("Monthly Fee:");
-        feeDesc.setBounds(10, 200, 100, 25);
+        feeDesc.setBounds(10, 220, 100, 25);
         panel.add(feeDesc);
 
         fee = new JTextField();
-        fee.setBounds(140, 200, 150, 25);
+        fee.setBounds(140, 220, 150, 25);
         panel.add(fee);
 
         JLabel startDesc = new JLabel("Start Date:");
-        startDesc.setBounds(10, 230, 100, 25);
+        startDesc.setBounds(10, 250, 100, 25);
         panel.add(startDesc);
 
         start = new JTextField();
-        start.setBounds(140, 230, 150, 25);
+        start.setBounds(140, 250, 150, 25);
         panel.add(start);
 
         JLabel endDesc = new JLabel("End Date:");
-        endDesc.setBounds(10, 260, 100, 25);
+        endDesc.setBounds(10, 280, 100, 25);
         panel.add(endDesc);
 
         end = new JTextField();
-        end.setBounds(140, 260, 150, 25);
+        end.setBounds(140, 280, 150, 25);
         panel.add(end);
 
         submit1 = new JButton("Submit");
-        submit1.setBounds(310,260,80,25);
+        submit1.setBounds(310,280,80,25);
         panel.add(submit1);
         submit1.addActionListener(this);
 
+        out1 = new JLabel("");
+        out1.setBounds(200, 300, 300, 25);
+        panel.add(out1);
+
 
         title.setForeground(Color.decode("#222D6D"));
+        out.setForeground(Color.decode("#990000"));
+        out1.setForeground(Color.decode("#990000"));
         panel.setBackground(Color.decode("#E5F1F6"));
         submit.setForeground(Color.decode("#222D6D"));
         submit1.setForeground(Color.decode("#222D6D"));
@@ -109,6 +126,7 @@ public class CustomerStorage implements ActionListener {
         endDesc.setForeground(Color.decode("#222D6D"));
         feeDesc.setForeground(Color.decode("#222D6D"));
         choose.setForeground(Color.decode("#222D6D"));
+        line.setForeground(Color.decode("#222D6D"));
 
 
         frame.pack();
@@ -119,6 +137,7 @@ public class CustomerStorage implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // TODO add cases for wrong inputs
 //        if (e.getSource() == submit) {
 //            if (name.getText().equals("") || id.getText().equals("")) {
 //
