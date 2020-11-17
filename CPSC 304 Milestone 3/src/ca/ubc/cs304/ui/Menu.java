@@ -59,7 +59,6 @@ public class Menu implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if (e.getSource() == customer) {
             CustomerManagement customerManagement = new CustomerManagement();
             customerManagement.customerManagement();

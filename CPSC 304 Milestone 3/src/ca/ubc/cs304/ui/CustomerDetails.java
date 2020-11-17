@@ -129,12 +129,13 @@ public class CustomerDetails implements ActionListener {
         if (e.getSource() == newMemberShip) {
             //TODO trigger new Membership Screen
             CustomerNew customerNew = new CustomerNew();
-            customerNew.run();
+            customerNew.CustomerNew();
+//            customerNew.run();
         }
         if (e.getSource() == newStorage) {
             //TODO trigger new Storage Screen
             CustomerStorage customerStorage = new CustomerStorage();
-            customerStorage.run();
+            customerStorage.CustomerStorage();
         }
     }
 }
