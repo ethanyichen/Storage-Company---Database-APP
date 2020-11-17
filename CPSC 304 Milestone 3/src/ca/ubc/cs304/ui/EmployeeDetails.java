@@ -139,10 +139,14 @@ public class EmployeeDetails implements ActionListener {
             if (newSal.matches("[0-9]+") && newSal.length() > 0) {
                 newSalInt = Integer.parseInt(newSal);
             }
-            if (newSalInt==-1)
-                confirmation="Invalid input for Salary. Salary for employee (ID):" +eIDInt + " not updated.";
-            else
-                confirmation = "Salary updated to $" +newSalInt+ " for employee (ID): " +eIDInt ;
+            if (newSalInt==-1) {
+                confirmation = "Invalid input for Salary. Salary for employee (ID):" + eIDInt + " not updated.";
+                updateConfirmation.setForeground(Color.decode("#990000"));
+            }
+            else {
+                confirmation = "Salary updated to $" + newSalInt + " for employee (ID): " + eIDInt;
+                updateConfirmation.setForeground(Color.decode("#0e6b0e"));
+            }
             updateConfirmation.setText(confirmation);
             newSalary.setText("");
         }

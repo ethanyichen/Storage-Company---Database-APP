@@ -34,7 +34,8 @@ public class EmployeeManagement implements ActionListener {
     private  JLabel deleteE;
     private JLabel deleteEName;
 
-
+    private Color submitMsgColorRed = Color.decode("#990000");
+    private Color submitMsgColorGreen = Color.decode("#0e6b0e");
 
 
 
@@ -170,11 +171,11 @@ public class EmployeeManagement implements ActionListener {
         searchError.setForeground(Color.decode("#222D6D"));
         eLabel.setForeground(Color.decode("#222D6D"));
 
-        addConfirmationID.setForeground(Color.decode("#990000"));
-        addConfirmation.setForeground(Color.decode("#990000"));
-        searchError.setForeground(Color.decode("#990000"));
-        deleteConfirmation.setForeground(Color.decode("#990000"));
 
+        addConfirmation.setForeground(submitMsgColorRed);
+        searchError.setForeground(submitMsgColorRed);
+        deleteConfirmation.setForeground(submitMsgColorRed);
+        addConfirmationID.setForeground(submitMsgColorGreen);
 
 
         eFrame.pack();
@@ -214,8 +215,11 @@ public class EmployeeManagement implements ActionListener {
             if (eNameIn.equals("")|eSalaryIn==-1) {
                 addMsg = "Unsuccessful. Missing Fields or incorrect input. no EmployeeID generated.";
                 addMsgID="";
+                addConfirmation.setForeground(submitMsgColorRed);
+
             }else {
                 addMsg = "Employee \"" + eNameIn + "\" with salary $" + eSalaryIn + " successfully added.";
+                addConfirmation.setForeground(submitMsgColorGreen);
                 addMsgID = "EmployeeID Assigned = ...";
             }
             addConfirmation.setText(addMsg);
@@ -229,10 +233,14 @@ public class EmployeeManagement implements ActionListener {
         if (e.getSource() == deleteB) {
             String eNameIn = eNameDel.getText();
             String deleteMsg;
-            if(eNameIn.equals(""))
-                deleteMsg="Invalid input";
-            else
+            if(eNameIn.equals("")) {
+                deleteMsg = "Invalid input";
+                deleteConfirmation.setForeground(submitMsgColorRed);
+            }
+            else{
                 deleteMsg="Employee \"" +eNameIn+ "\" successfully deleted from Database.";
+                deleteConfirmation.setForeground(submitMsgColorGreen);
+            }
             deleteConfirmation.setText(deleteMsg);
             eNameDel.setText("");
         }

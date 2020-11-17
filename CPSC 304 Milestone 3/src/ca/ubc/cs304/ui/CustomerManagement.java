@@ -26,6 +26,7 @@ public class CustomerManagement implements ActionListener {
 
     private int CUSTOMER_ID_DB;
     private Color submitMsgColorRed = Color.decode("#990000");
+    private Color submitMsgColorGreen = Color.decode("#0e6b0e");
 
 
     public void customerManagement() {
@@ -147,7 +148,7 @@ public class CustomerManagement implements ActionListener {
         searchCustomer.setForeground(Color.decode("#222D6D"));
 
         submitMessege.setForeground(submitMsgColorRed);
-        submitIDMessege.setForeground(Color.GREEN);
+        submitIDMessege.setForeground(submitMsgColorGreen);
 
         cFrame.pack();
         cFrame.setSize(600,500);
@@ -193,7 +194,7 @@ public class CustomerManagement implements ActionListener {
                 submitMsg = "Unsuccessful. Missing Fields or incorrect input. no CustomerID generated.";
                 submitMsgID="";
             }else {
-                submitMessege.setForeground(Color.GREEN);
+                submitMessege.setForeground(submitMsgColorGreen);
                 submitMsg = "Customer \"" + cNameText + "\" with phone number" + cphoneNumInt + " successfully added.";
                 int generatedCID = -1;
                 submitMsgID = "customerID Assigned = " + generatedCID ;
