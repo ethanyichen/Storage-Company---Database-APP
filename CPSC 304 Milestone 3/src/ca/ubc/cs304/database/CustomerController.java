@@ -1,6 +1,7 @@
 package ca.ubc.cs304.database;
 
 import ca.ubc.cs304.exceptions.CustomerSearchException;
+import ca.ubc.cs304.exceptions.ServerErrorException;
 import ca.ubc.cs304.model.Customer;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.Statement;
 public class CustomerController extends Controller {
     private Connection connection;
 
-    public CustomerController(DatabaseConnectionHandler db) {
+    public CustomerController(DatabaseConnectionHandler db) throws ServerErrorException {
         super(db);
         connection = super.connection;
     }

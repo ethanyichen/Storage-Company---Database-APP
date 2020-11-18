@@ -1,5 +1,7 @@
 package ca.ubc.cs304.database;
 
+import ca.ubc.cs304.exceptions.ServerErrorException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -71,10 +73,10 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws ServerErrorException {
         if (connection == null) {
             System.out.println("Connection Lost");
-            return null;
+            throw new ServerErrorException();
         } else {
             return connection;
         }

@@ -3,6 +3,7 @@ package ca.ubc.cs304.ui;
 import ca.ubc.cs304.database.CustomerController;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.exceptions.CustomerSearchException;
+import ca.ubc.cs304.exceptions.ServerErrorException;
 import ca.ubc.cs304.model.Customer;
 
 import javax.swing.*;
@@ -190,6 +191,9 @@ public class CustomerManagement implements ActionListener {
             } catch (CustomerSearchException exception) {
                 searchError.setText("Customer Not Found OR Duplicate Record");
                 exception.printStackTrace();
+            } catch (ServerErrorException serverErrorException){
+                searchError.setText("Server Error");
+                serverErrorException.printStackTrace();
             }
         }
 
