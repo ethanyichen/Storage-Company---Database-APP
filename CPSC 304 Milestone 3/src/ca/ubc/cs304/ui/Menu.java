@@ -1,5 +1,8 @@
 package ca.ubc.cs304.ui;
 
+import ca.ubc.cs304.database.Controller;
+import ca.ubc.cs304.database.DatabaseConnectionHandler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,12 +14,15 @@ public class Menu implements ActionListener {
     private  JButton employee;
     private  JButton customer;
 
+    private DatabaseConnectionHandler db = new DatabaseConnectionHandler();
+
     public static void main(String[] args) {
         Menu menu = new Menu();
         menu.menu();
     }
 
     public void menu(){
+        db.login();
         panel = new JPanel();
         frame = new JFrame("Storage Management -- Main Menu");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -60,12 +66,12 @@ public class Menu implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == customer) {
-            CustomerManagement customerManagement = new CustomerManagement();
+            CustomerManagement customerManagement = new CustomerManagement(db);
             customerManagement.customerManagement();
         }
 
         if (e.getSource() == employee) {
-            EmployeeManagement employeeManagement = new EmployeeManagement();
+            EmployeeManagement employeeManagement = new EmployeeManagement(db);
             employeeManagement.employeeManagement();
         }
     }

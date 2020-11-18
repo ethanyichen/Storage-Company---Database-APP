@@ -1,5 +1,8 @@
 package ca.ubc.cs304.ui;
 
+import ca.ubc.cs304.database.CustomerController;
+import ca.ubc.cs304.model.Customer;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
@@ -19,11 +22,18 @@ public class CustomerDetails implements ActionListener {
     private JLabel nameDisplay;
     private  JLabel cIDDisplay;
 
+    private  Customer customer;
     private int CUSTOMER_ID_DB;
-    private String CUSTOMER_NAME_DB = "NULL";
+    private String CUSTOMER_NAME_DB;
+    private String CUSTOMER_PHONE_DB;
+    private CustomerController customerController;
 
-    public CustomerDetails(int CUSTOMER_ID_DB) {
-        this.CUSTOMER_ID_DB = CUSTOMER_ID_DB;
+    public CustomerDetails(CustomerController customerController,Customer customer) {
+        this.customerController = customerController;
+        this.customer = customer;
+        CUSTOMER_ID_DB = customer.getCustomerID();
+        CUSTOMER_NAME_DB = customer.getCustomerName();
+        CUSTOMER_PHONE_DB = customer.getCustomerPhoneNum();
     }
 
 

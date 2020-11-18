@@ -1,9 +1,16 @@
 package ca.ubc.cs304.ui;
 
+import ca.ubc.cs304.database.CustomerController;
+import ca.ubc.cs304.database.DatabaseConnectionHandler;
+import ca.ubc.cs304.exceptions.CustomerSearchException;
+import ca.ubc.cs304.model.Customer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+
 
 public class CustomerManagement implements ActionListener {
 
@@ -24,10 +31,14 @@ public class CustomerManagement implements ActionListener {
     private JButton cDirec;
     private JButton memberOfAll;
 
-    private int CUSTOMER_ID_DB;
+    private DatabaseConnectionHandler db;
     private Color submitMsgColorRed = Color.decode("#990000");
     private Color submitMsgColorGreen = Color.decode("#0e6b0e");
 
+
+    public CustomerManagement(DatabaseConnectionHandler db) {
+        this.db = db;
+    }
 
     public void customerManagement() {
 
@@ -39,7 +50,7 @@ public class CustomerManagement implements ActionListener {
         cPanel.setLayout(null);
 
         JLabel title = new JLabel("Customer Mangement");
-        title.setBounds(150,15,300,40);
+        title.setBounds(150, 15, 300, 40);
         Font f = new Font("serif", Font.BOLD, 30);
 
         title.setFont(f);
@@ -47,28 +58,28 @@ public class CustomerManagement implements ActionListener {
 
         //add new customer
         JLabel newCustomer = new JLabel("New Customer");
-        newCustomer.setBounds(10,50,165,25);
+        newCustomer.setBounds(10, 50, 165, 25);
         newCustomer.setFont(newCustomer.getFont().deriveFont(Font.BOLD));
         cPanel.add(newCustomer);
 
         name = new JLabel("Name:");
-        name.setBounds(10,80,80,25);
+        name.setBounds(10, 80, 80, 25);
         cPanel.add(name);
 
         cName = new JTextField();
-        cName.setBounds(120,80,180,25);
+        cName.setBounds(120, 80, 180, 25);
         cPanel.add(cName);
 
         phoneNum = new JLabel("Phone Number:");
-        phoneNum.setBounds(10,110,180,25);
+        phoneNum.setBounds(10, 110, 180, 25);
         cPanel.add(phoneNum);
 
         cPhoneNum = new JTextField();
-        cPhoneNum.setBounds(120,110,180,25);
+        cPhoneNum.setBounds(120, 110, 180, 25);
         cPanel.add(cPhoneNum);
 
         submit = new JButton("Submit");
-        submit.setBounds(310,110,80,25);
+        submit.setBounds(310, 110, 80, 25);
         submit.setFont(newCustomer.getFont().deriveFont(Font.BOLD));
         cPanel.add(submit);
         cLabel = new JLabel();
@@ -78,56 +89,56 @@ public class CustomerManagement implements ActionListener {
 
 
         submitMessege = new JLabel("");
-        submitMessege.setBounds(75,135,475,15);
+        submitMessege.setBounds(75, 135, 475, 15);
         cPanel.add(submitMessege);
 
         submitIDMessege = new JLabel("");
-        submitIDMessege.setBounds(150,150,200,15);
+        submitIDMessege.setBounds(150, 150, 200, 15);
         cPanel.add(submitIDMessege);
 
         //Horizontal Line
         JLabel line = new JLabel("_______________________________________________________________________________________");
-        line.setBounds(10,160,600,15);
+        line.setBounds(10, 160, 600, 15);
         cPanel.add(line);
 
         //Search Customer
         JLabel searchCustomer = new JLabel("Search Existing Customer");
-        searchCustomer.setBounds(10,180,400,25);
+        searchCustomer.setBounds(10, 180, 400, 25);
         searchCustomer.setFont(newCustomer.getFont().deriveFont(Font.BOLD));
         cPanel.add(searchCustomer);
 
         JLabel customerIDLabel = new JLabel("CustomeID:");
-        customerIDLabel.setBounds(10,210,100,25);
+        customerIDLabel.setBounds(10, 210, 100, 25);
         cPanel.add(customerIDLabel);
 
         cID = new JTextField();
-        cID.setBounds(120,210,180,25);
+        cID.setBounds(120, 210, 180, 25);
         cPanel.add(cID);
 
         search = new JButton("Search");
-        search.setBounds(300,210,80,25);
+        search.setBounds(300, 210, 80, 25);
         search.addActionListener(this);
         search.setFont(newCustomer.getFont().deriveFont(Font.BOLD));
         cPanel.add(search);
 
         searchError = new JLabel("");
-        searchError.setBounds(150,240,200,15);
+        searchError.setBounds(150, 240, 300, 15);
         cPanel.add(searchError);
 
         cDirec = new JButton("Customer Directories");
-        cDirec.setBounds(100,260,370,50);
+        cDirec.setBounds(100, 260, 370, 50);
         cDirec.setFont(newCustomer.getFont().deriveFont(Font.BOLD));
         cDirec.addActionListener(this);
         cPanel.add(cDirec);
 
         memberOfAll = new JButton("Customer That is Member of Every Warehouse");
-        memberOfAll.setBounds(100,320,370,50);
+        memberOfAll.setBounds(100, 320, 370, 50);
         memberOfAll.setFont(newCustomer.getFont().deriveFont(Font.BOLD));
         memberOfAll.addActionListener(this);
         cPanel.add(memberOfAll);
 
         activeCustomer = new JButton("Active Customers");
-        activeCustomer.setBounds(100,380,370,50);
+        activeCustomer.setBounds(100, 380, 370, 50);
         activeCustomer.setFont(newCustomer.getFont().deriveFont(Font.BOLD));
         activeCustomer.addActionListener(this);
         cPanel.add(activeCustomer);
@@ -149,9 +160,10 @@ public class CustomerManagement implements ActionListener {
 
         submitMessege.setForeground(submitMsgColorRed);
         submitIDMessege.setForeground(submitMsgColorGreen);
+        searchError.setForeground(submitMsgColorRed);
 
         cFrame.pack();
-        cFrame.setSize(600,500);
+        cFrame.setSize(600, 500);
         cFrame.setVisible(true);
     }
 
@@ -165,17 +177,20 @@ public class CustomerManagement implements ActionListener {
             if (cID_TEXT.matches("[0-9]+") && cID_TEXT.length() > 0) {
                 cID_INT = Integer.parseInt(cID_TEXT);
             }
-            //TODO deal with search no results
-//            if (cID_INT == -1 OR not found) {
-//                searchError.setText("Invalid input");
-//            } else{
-                CUSTOMER_ID_DB = cID_INT;
-//            }
-
-            //TODO trigger new screen
-            cID.setText("");
-            CustomerDetails customerDetails = new CustomerDetails(CUSTOMER_ID_DB);
-            customerDetails.customerDetials();
+            try {
+                CustomerController customerController = new CustomerController(db);
+                if (cID_INT == -1) {
+                    searchError.setText("Invalid input");
+                } else {
+                    Customer customer = customerController.searchCustomer(cID_INT);
+                    cID.setText("");
+                    CustomerDetails customerDetails = new CustomerDetails(customerController,customer);
+                    customerDetails.customerDetials();
+                }
+            } catch (CustomerSearchException exception) {
+                searchError.setText("Customer Not Found OR Duplicate Record");
+                exception.printStackTrace();
+            }
         }
 
         //submit button

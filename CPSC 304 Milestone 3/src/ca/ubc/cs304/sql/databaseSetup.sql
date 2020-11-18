@@ -129,3 +129,4 @@ CREATE TABLE purchase
     FOREIGN KEY (warehouseID) REFERENCES Warehouse (warehouseID) ON DELETE SET NULL,
     FOREIGN KEY (cartID) REFERENCES Cart (cartID)
 );
+INSERT INTO Customer(customerID,cName,phoneNum) VALUES('8385047','Baguette','6048059783');

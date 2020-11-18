@@ -1,5 +1,7 @@
 package ca.ubc.cs304.ui;
 
+import ca.ubc.cs304.database.DatabaseConnectionHandler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -37,7 +39,11 @@ public class EmployeeManagement implements ActionListener {
     private Color submitMsgColorRed = Color.decode("#990000");
     private Color submitMsgColorGreen = Color.decode("#0e6b0e");
 
+    private DatabaseConnectionHandler db;
 
+    public EmployeeManagement(DatabaseConnectionHandler db) {
+        this.db = db;
+    }
 
     public void employeeManagement() {
 
