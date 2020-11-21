@@ -141,4 +141,9 @@ INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('002','Tom','1000');
 INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('003','Sam','1000');
 INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('004','Kim','1000');
 
+INSERT INTO Unit(unitID, capacity, warehouseID, employeeID, customerID, startDate, endDate)
+VALUES ('100','100','1000','001','8385047','2020-05-20','2021-05-20');
+
+INSERT INTO Box(boxID, unitID, customerID, boxSize) VALUES ('20','100','8385047','20');
+
 

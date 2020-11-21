@@ -8,20 +8,25 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Hashtable;
 
 public class CustomerController extends Controller {
     private Connection connection;
+    private Integer customerID;
 
     public CustomerController(DatabaseConnectionHandler db) throws ServerErrorException {
         super(db);
         connection = super.connection;
     }
 
+    //TODO
     private void addCustomer(){
 
     }
 
     public Customer searchCustomer(int customerID) throws CustomerSearchException {
+        this.customerID = customerID;
         int ID = -1;
         String name = "";
         String phoneNum = "";
@@ -46,5 +51,23 @@ public class CustomerController extends Controller {
             super.rollbackConnection();
         }
         return new Customer(ID,name,phoneNum);
+    }
+
+    public HashMap<Integer,Integer> currentStorageCount(){
+        Statement stmt = null;
+        HashMap <Integer,Integer> ret = new HashMap<>();
+        try {
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT unitID,COUNT(*) FROM Box WHERE customerID = " + customerID + " GROUP BY unitID");
+            if(rs.next()) {
+                ret.put(rs.getInt("unitID"),rs.getInt(2));
+                return ret;
+            } else{
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

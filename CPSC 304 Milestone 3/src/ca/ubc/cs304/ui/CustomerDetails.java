@@ -9,6 +9,9 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 
 public class CustomerDetails implements ActionListener {
 
@@ -52,19 +55,19 @@ public class CustomerDetails implements ActionListener {
         cPanel.add(title);
 
         JLabel name = new JLabel("Name ");
-        name.setBounds(460,5,300,20);
+        name.setBounds(430,5,300,20);
         cPanel.add(name);
 
         nameDisplay = new JLabel("");
-        nameDisplay.setBounds(505,5,300,20);
+        nameDisplay.setBounds(475,5,300,20);
         cPanel.add(nameDisplay);
 
         JLabel cID = new JLabel("ID ");
-        cID.setBounds(460,30,300,25);
+        cID.setBounds(430,30,300,25);
         cPanel.add(cID);
 
         cIDDisplay = new JLabel("");
-        cIDDisplay.setBounds(485,30,300,25);
+        cIDDisplay.setBounds(455,30,300,25);
         cPanel.add(cIDDisplay);
 
         currentStorage = new JButton("Current Storage");
@@ -128,9 +131,17 @@ public class CustomerDetails implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == currentStorage) {
-            resultDisplay.setText("Current Storage:");
-            //TODO deal with current Storage result
-        }
+            HashMap<Integer,Integer> unitIDAndCount = customerController.currentStorageCount();
+            if(unitIDAndCount != null) {
+                ArrayList unitList = new ArrayList<>(unitIDAndCount.keySet());
+                resultDisplay.setText("Current Storage:\n");
+                //TODO deal with current Storage result
+                for (int i = 0; i < unitList.size(); i++) {
+                    resultDisplay.append("Unit " + unitList.get(i) + ": Currently storing  " +
+                            Integer.toString(unitIDAndCount.get(unitList.get(i))) + "  box(es)\n");
+                }
+            }
+            }
 
         if (e.getSource() == currentMembership) {
             resultDisplay.setText("Current Membership:");
