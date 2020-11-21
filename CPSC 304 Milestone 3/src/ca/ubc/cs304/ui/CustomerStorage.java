@@ -152,6 +152,14 @@ public class CustomerStorage implements ActionListener {
     }
 
     public static boolean isValidDate(String inDate) {
+        String check = "";
+        for (int i = 6; i < inDate.length(); i++) {
+            check += inDate.charAt(i);
+        }
+        if (Integer.parseInt(check) < 2020) {
+            System.out.println(check);
+            return false;
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         dateFormat.setLenient(false);
         try {

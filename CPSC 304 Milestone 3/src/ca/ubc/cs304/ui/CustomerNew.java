@@ -120,13 +120,15 @@ public class CustomerNew implements ActionListener {
         frame.pack();
         frame.setSize(600, 500);
         frame.setVisible(true);
-
     }
+
+
+
+
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO add cases for wrong inputs
         if (e.getSource() == submit) {
             if (isValidDate(date.getText())) {
                 String dropDown = choose.getSelectedItem().toString();
@@ -141,6 +143,13 @@ public class CustomerNew implements ActionListener {
     }
 
     public static boolean isValidDate(String inDate) {
+        String check = "";
+        for (int i = 6; i < inDate.length(); i++) {
+            check += inDate.charAt(i);
+        }
+        if (Integer.parseInt(check) < 2020) {
+            return false;
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         dateFormat.setLenient(false);
         try {

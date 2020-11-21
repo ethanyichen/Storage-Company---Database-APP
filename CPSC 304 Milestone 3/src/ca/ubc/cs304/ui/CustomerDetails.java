@@ -151,7 +151,6 @@ public class CustomerDetails implements ActionListener {
             //TODO trigger new Membership Screen
             CustomerNew customerNew = new CustomerNew();
             customerNew.CustomerNew(CUSTOMER_ID_DB, CUSTOMER_NAME_DB);
-//            customerNew.run();
         }
         if (e.getSource() == newStorage) {
             //TODO trigger new Storage Screen
