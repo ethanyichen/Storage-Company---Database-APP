@@ -203,7 +203,7 @@ public class CustomerManagement implements ActionListener {
             String cPhoneNumText = cPhoneNum.getText();
             int cphoneNumInt = -1;
             if (cPhoneNumText.matches("[0-9]+") && cPhoneNumText.length() > 0) {
-                cphoneNumInt= Integer.parseInt(cPhoneNumText);
+                cphoneNumInt = 1;
             }
             //TODO generate new CustomerID, how to deal with duplicated adds
             String submitMsg;
@@ -220,7 +220,7 @@ public class CustomerManagement implements ActionListener {
                 submitMsgID = "customerID Assigned = " + generatedCID ;
                 try {
                     CustomerController customerController = new CustomerController(db);
-                    customerController.addCustomer(new Customer(generatedCID, cNameText, String.valueOf(cphoneNumInt)));
+                    customerController.addCustomer(new Customer(generatedCID, cNameText, cPhoneNumText));
                 } catch (ServerErrorException serverErrorException) {
                     serverErrorException.printStackTrace(); }
             }
