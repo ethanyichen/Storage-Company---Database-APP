@@ -3,11 +3,9 @@ package ca.ubc.cs304.database;
 import ca.ubc.cs304.exceptions.CustomerSearchException;
 import ca.ubc.cs304.exceptions.ServerErrorException;
 import ca.ubc.cs304.model.Customer;
+import ca.ubc.cs304.ui.CustomerManagement;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Hashtable;
 
@@ -21,8 +19,19 @@ public class CustomerController extends Controller {
     }
 
     //TODO
-    private void addCustomer(){
-
+    public void addCustomer(Customer c) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO Customer VALUES (?,?,?)");
+            ps.setInt(1, c.getCustomerID());
+            ps.setString(2, c.getCustomerName());
+            ps.setString(3, c.getCustomerPhoneNum());
+            ps.executeUpdate();
+            connection.commit();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            super.rollbackConnection();
+        }
     }
 
     public Customer searchCustomer(int customerID) throws CustomerSearchException {

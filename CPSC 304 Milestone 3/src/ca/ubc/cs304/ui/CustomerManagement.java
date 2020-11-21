@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.Random;
 
 
 public class CustomerManagement implements ActionListener {
@@ -214,9 +214,15 @@ public class CustomerManagement implements ActionListener {
                 submitMsgID="";
             }else {
                 submitMessege.setForeground(submitMsgColorGreen);
-                submitMsg = "Customer \"" + cNameText + "\" with phone number" + cphoneNumInt + " successfully added.";
-                int generatedCID = -1;
+                submitMsg = "Customer \"" + cNameText  + "\" with phone number" + cphoneNumInt + " successfully added.";
+                Random rand = new Random();
+                int generatedCID = rand.nextInt(500);
                 submitMsgID = "customerID Assigned = " + generatedCID ;
+                try {
+                    CustomerController customerController = new CustomerController(db);
+                    customerController.addCustomer(new Customer(generatedCID, cNameText, String.valueOf(cphoneNumInt)));
+                } catch (ServerErrorException serverErrorException) {
+                    serverErrorException.printStackTrace(); }
             }
             submitMessege.setText(submitMsg);
             cName.setText("");
