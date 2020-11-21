@@ -142,7 +142,6 @@ public class CustomerStorage implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO add cases for wrong inputs
         if (e.getSource() == submit) {
             if (fee.getText().matches("[0-9]+") && fee.getText().length() > 0 && isValidDate(end.getText()) && isValidDate(start.getText())) {
                 out1.setText("Storage for : " + CUSTOMER_NAME_DB + ", ID: " + CUSTOMER_ID_DB + " from " + start.getText() + " to " + end.getText() + " in " + choose.getSelectedItem() + " created ");
