@@ -69,7 +69,6 @@ public class Menu implements ActionListener {
             CustomerManagement customerManagement = new CustomerManagement(db);
             customerManagement.customerManagement();
         }
-
         if (e.getSource() == employee) {
             EmployeeManagement employeeManagement = new EmployeeManagement(db);
             employeeManagement.employeeManagement();

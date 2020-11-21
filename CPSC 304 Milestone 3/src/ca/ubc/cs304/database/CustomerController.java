@@ -3,6 +3,7 @@ package ca.ubc.cs304.database;
 import ca.ubc.cs304.exceptions.CustomerSearchException;
 import ca.ubc.cs304.exceptions.ServerErrorException;
 import ca.ubc.cs304.model.Customer;
+import ca.ubc.cs304.model.Member;
 import ca.ubc.cs304.ui.CustomerManagement;
 
 import java.sql.*;
@@ -16,6 +17,21 @@ public class CustomerController extends Controller {
     public CustomerController(DatabaseConnectionHandler db) throws ServerErrorException {
         super(db);
         connection = super.connection;
+    }
+
+    public void addMember(Member m) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO Member VALUES (?,?,?)");
+            ps.setInt(1, m.getWarehouseID());
+            ps.setInt(2, m.getCustomerID());
+            ps.setString(3, m.getMembershipStartDate());
+            ps.executeUpdate();
+            connection.commit();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            super.rollbackConnection();
+        }
     }
 
     //TODO

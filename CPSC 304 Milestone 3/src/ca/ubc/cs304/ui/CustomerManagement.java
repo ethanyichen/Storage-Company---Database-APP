@@ -222,7 +222,8 @@ public class CustomerManagement implements ActionListener {
                     CustomerController customerController = new CustomerController(db);
                     customerController.addCustomer(new Customer(generatedCID, cNameText, String.valueOf(cphoneNumInt)));
                 } catch (ServerErrorException serverErrorException) {
-                    serverErrorException.printStackTrace(); }
+                    serverErrorException.printStackTrace();
+                }
             }
             submitMessege.setText(submitMsg);
             cName.setText("");
@@ -246,6 +247,5 @@ public class CustomerManagement implements ActionListener {
             Directory customerDirectory = new Directory("Active Customer Directories:");
             customerDirectory.directory();
         }
-
     }
 }

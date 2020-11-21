@@ -26,9 +26,13 @@ public class CustomerStorage implements ActionListener {
     private int CUSTOMER_ID_DB;
     private String CUSTOMER_NAME_DB;
 
-    public void CustomerStorage(int CUSTOMER_ID_DB, String CUSTOMER_NAME_DB){
+    public CustomerStorage(int CUSTOMER_ID_DB, String CUSTOMER_NAME_DB) {
         this.CUSTOMER_ID_DB = CUSTOMER_ID_DB;
         this.CUSTOMER_NAME_DB = CUSTOMER_NAME_DB;
+    }
+
+
+    public void customerStorage() {
         String startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
         panel = new JPanel();
