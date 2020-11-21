@@ -126,12 +126,10 @@ public class EmployeeDetails implements ActionListener {
         updateConfirmation.setForeground(Color.decode("#990000"));
 
 
-        //othrt nameDisplay eIDDisplay
 
 
 
-        //TODO set name and ID to the customer currently in progres
-        //nameDisplay.setText(EMPLOYEE_NAME_DB);
+        nameDisplay.setText(EMPLOYEE_NAME_DB);
         eIDDisplay.setText(Integer.toString(eIDInt));
 
         frame.pack();

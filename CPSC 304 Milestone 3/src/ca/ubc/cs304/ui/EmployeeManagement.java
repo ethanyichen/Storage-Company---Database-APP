@@ -90,7 +90,7 @@ public class EmployeeManagement implements ActionListener {
         ePanel.add(eLabel);
 
         searchError = new JLabel("");
-        searchError.setBounds(170,110,200,25);
+        searchError.setBounds(170,110,300,25);
         ePanel.add(searchError);
 
         //Horizontal Line
