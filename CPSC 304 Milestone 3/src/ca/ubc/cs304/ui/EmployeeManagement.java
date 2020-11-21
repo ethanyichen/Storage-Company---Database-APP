@@ -1,6 +1,13 @@
 package ca.ubc.cs304.ui;
 
+import ca.ubc.cs304.database.CustomerController;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
+import ca.ubc.cs304.database.EmployeeContoller;
+import ca.ubc.cs304.exceptions.CustomerSearchException;
+import ca.ubc.cs304.exceptions.EmployeeSearchException;
+import ca.ubc.cs304.exceptions.ServerErrorException;
+import ca.ubc.cs304.model.Customer;
+import ca.ubc.cs304.model.Employee;
 
 import javax.swing.*;
 import java.awt.*;
@@ -194,17 +201,28 @@ public class EmployeeManagement implements ActionListener {
         //search button
         if (e.getSource() == searchB) {
             searchError.setText("");
-            int emID = -1;
-            String stringID = eID.getText();
-            if (stringID.matches("[0-9]+") && stringID.length() > 0) {
-                emID = Integer.parseInt(stringID);
+            int eID_INT = -1;
+            String eID_TEXT = eID.getText();
+            if (eID_TEXT.matches("[0-9]+") && eID_TEXT.length() > 0) {
+                eID_INT = Integer.parseInt(eID_TEXT);
             }
-            EmployeeDetails employeeDetails = new EmployeeDetails(emID);
-            //TODO deal with fail
-            if (emID == -1) {
-                searchError.setText("Invalid input");
+            try {
+                EmployeeContoller employeeController = new EmployeeContoller(db);
+                if (eID_INT == -1) {
+                    searchError.setText("Invalid input");
+                } else {
+                    Employee employee = employeeController.searchEmployee(eID_INT);
+                    eID.setText("");
+                    EmployeeDetails employeeDetails = new EmployeeDetails(employeeController,employee);
+                    employeeDetails.employeeDetails();
+                }
+            } catch (EmployeeSearchException exception) {
+                searchError.setText("Employee Not Found OR Duplicate Record");
+                exception.printStackTrace();
+            } catch (ServerErrorException serverErrorException){
+                searchError.setText("Server Error");
+                serverErrorException.printStackTrace();
             }
-            eID.setText("");
         }
 
         //add button

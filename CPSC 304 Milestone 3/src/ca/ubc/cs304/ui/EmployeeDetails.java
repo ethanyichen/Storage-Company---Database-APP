@@ -1,5 +1,8 @@
 package ca.ubc.cs304.ui;
 
+import ca.ubc.cs304.database.EmployeeContoller;
+import ca.ubc.cs304.model.Employee;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,12 +19,19 @@ public class EmployeeDetails implements ActionListener {
     private JLabel nameDisplay;
     private JLabel eIDDisplay;
 
-    private int eID;
     private String EMPLOYEE_NAME_DB = "NULL";
+    private int EMPLOYEE_ID_DB = -1;
+    private EmployeeContoller employeeContoller;
+    private Employee employee;
 
+    public EmployeeDetails(EmployeeContoller employeeContoller, Employee employee) {
+        this.employeeContoller = employeeContoller;
+        this.employee = employee;
+        this.EMPLOYEE_NAME_DB = employee.getEmployeeName();
+        this.EMPLOYEE_ID_DB = employee.getEmployeeID();
+    }
 
-    EmployeeDetails(int emID){
-        this.eID = emID;
+    public void employeeDetails(){
         panel = new JPanel();
         frame = new JFrame("Employee Details");
         frame.add(panel, BorderLayout.CENTER);
@@ -35,7 +45,7 @@ public class EmployeeDetails implements ActionListener {
         title.setFont(f);
         panel.add(title);
 
-        eIDInt=emID;
+        eIDInt=EMPLOYEE_ID_DB;
 
         //TODO invalid ID ??
         if(eIDInt==-1) {
@@ -133,7 +143,7 @@ public class EmployeeDetails implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         //update button
         if (e.getSource() == updateSal) {
-            String newSal=newSalary.getText();
+            String newSal= newSalary.getText();
             int newSalInt = -1;
             String confirmation;
             if (newSal.matches("[0-9]+") && newSal.length() > 0) {

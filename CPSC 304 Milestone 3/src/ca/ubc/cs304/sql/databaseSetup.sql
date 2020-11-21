@@ -130,3 +130,14 @@ CREATE TABLE purchase
     FOREIGN KEY (cartID) REFERENCES Cart (cartID)
 );
 INSERT INTO Customer(customerID,cName,phoneNum) VALUES('8385047','Baguette','6048059783');
+INSERT INTO Customer(customerID,cName,phoneNum) VALUES('8381234','Leonardo Dicaprio','6048059783');
+INSERT INTO Customer(customerID,cName,phoneNum) VALUES('8384567','Brad Pitt','6048059783');
+INSERT INTO Customer(customerID,cName,phoneNum) VALUES('8383569','Robert De Niro','6048059783');
+
+INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('001','Bob','1000');
+INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('002','Tom','1000');
+INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('003','Sam','1000');
+INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('004','Kim','1000');
+
+INSERT INTO Warehouse(warehouseID,location,wName) VALUES('1000','Vancouver','Vancouver-General');
+
