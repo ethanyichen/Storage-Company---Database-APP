@@ -40,8 +40,8 @@ public class EmployeeContoller extends Controller {
         try {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Employee WHERE employeeID = " + eID);
-            if(rs.getRow()==0){
-                throw new EmployeeDeleteException(); //no employee with ID
+            if(rs.getRow()==1){
+               throw new EmployeeDeleteException(); //no employee with ID
             }
             PreparedStatement ps = connection.prepareStatement("DELETE FROM Employee WHERE employeeID= " + eID);
             ps.executeUpdate();
