@@ -1,6 +1,7 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.CustomerController;
+import ca.ubc.cs304.exceptions.ServerErrorException;
 import ca.ubc.cs304.model.Membership;
 
 import javax.swing.*;
