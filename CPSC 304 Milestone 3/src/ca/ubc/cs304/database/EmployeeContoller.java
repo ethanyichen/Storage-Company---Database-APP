@@ -8,6 +8,7 @@ import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Employee;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class EmployeeContoller extends Controller {
     private Connection connection;
@@ -15,6 +16,41 @@ public class EmployeeContoller extends Controller {
     public EmployeeContoller(DatabaseConnectionHandler db) throws ServerErrorException {
         super(db);
         connection = super.connection;
+    }
+
+    public ArrayList<String> currentWarehouse() {
+        Statement stmt = null;
+        ArrayList<String> listWarehouse = new ArrayList<>();
+        try {
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT wName FROM Warehouse");
+            while(rs.next()) {
+                listWarehouse.add(rs.getString("wName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listWarehouse;
+    }
+
+    public int currentWarehouseID(String name) {
+        Statement stmt = null;
+        int id =-1;
+        try {
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT wName, warehouseID FROM Warehouse");
+            while(rs.next()) {
+                String tempS = rs.getString("wname");
+                int temp = rs.getInt("warehouseID");
+                if (tempS.equals(name))
+                    id = temp;
+            }
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 
     public void addEmployee(Employee em) {
@@ -44,6 +80,19 @@ public class EmployeeContoller extends Controller {
                throw new EmployeeDeleteException(); //no employee with ID
             }
             PreparedStatement ps = connection.prepareStatement("DELETE FROM Employee WHERE employeeID= " + eID);
+            ps.executeUpdate();
+            connection.commit();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            super.rollbackConnection();
+        }
+    }
+
+    public void updateSalary(int employeeID, int newSalary){
+        try {
+            Statement stmt = connection.createStatement();
+            PreparedStatement ps = connection.prepareStatement("UPDATE EmployeeSalary SET Salary= " + newSalary + "WHERE employeeID= "+ employeeID);
             ps.executeUpdate();
             connection.commit();
             ps.close();
