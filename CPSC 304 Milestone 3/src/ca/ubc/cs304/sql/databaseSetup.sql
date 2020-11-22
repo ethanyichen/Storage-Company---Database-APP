@@ -134,7 +134,11 @@ INSERT INTO Customer(customerID,cName,phoneNum) VALUES('8381234','Leonardo Dicap
 INSERT INTO Customer(customerID,cName,phoneNum) VALUES('8384567','Brad Pitt','6048059783');
 INSERT INTO Customer(customerID,cName,phoneNum) VALUES('8383569','Robert De Niro','6048059783');
 
-INSERT INTO Warehouse(warehouseID,location,wName) VALUES('1000','Vancouver','Vancouver-General');
+INSERT INTO Warehouse(warehouseID,location,wName) VALUES('1000','1818 Quebec Street, Vancouver','Quebec Street');
+INSERT INTO Warehouse(warehouseID,location,wName) VALUES('1001','33 Commercial Drive, Vancouver','Commercial Drive');
+INSERT INTO Warehouse(warehouseID,location,wName) VALUES('1002','3240 No. 4 Road, Richmond','Richmond');
+INSERT INTO Warehouse(warehouseID,location,wName) VALUES('1003','3001 Wall Street, Vancouver','Wall Street');
+INSERT INTO Warehouse(warehouseID,location,wName) VALUES('1004','250 Taylor Way, West Vancouver','West Vancouver');
 
 INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('001','Bob','1000');
 INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('002','Tom','1000');

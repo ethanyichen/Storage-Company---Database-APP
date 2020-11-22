@@ -62,6 +62,7 @@ public class CustomerController extends Controller {
         return new Customer(ID,name,phoneNum);
     }
 
+
     public HashMap<Integer,Integer> currentStorageCount(){
         Statement stmt = null;
         HashMap <Integer,Integer> ret = new HashMap<>();

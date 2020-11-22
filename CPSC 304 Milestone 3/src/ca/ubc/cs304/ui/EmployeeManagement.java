@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 
 public class EmployeeManagement implements ActionListener {
@@ -42,6 +43,7 @@ public class EmployeeManagement implements ActionListener {
     private JLabel line1;
     private  JLabel deleteE;
     private JLabel deleteEName;
+    private JComboBox<String> cb;
 
     private Color submitMsgColorRed = Color.decode("#990000");
     private Color submitMsgColorGreen = Color.decode("#0e6b0e");
@@ -119,48 +121,58 @@ public class EmployeeManagement implements ActionListener {
         eSalary.setBounds(385,180,120,25);
         ePanel.add(eSalary);
 
+        addES = new JLabel("Warehouse");
+        addES.setBounds(200,210,70,25);
+        ePanel.add(addES);
+
+        String[] warehouses = {"Quebec Street","Commercial Drive", "Richmond","Wall Street","West Vancouver"};
+        cb = new JComboBox<String>(warehouses);
+        cb.setVisible(true);
+        cb.setBounds(270,210,120,25);
+        ePanel.add(cb);
+
         addB = new JButton("Add");
-        addB.setBounds(245,210,80,25);
+        addB.setBounds(245,250,80,25);
         addB.addActionListener(this);
         ePanel.add(addB);
 
         addConfirmation = new JLabel("");
-        addConfirmation.setBounds(75,240,475,25);
+        addConfirmation.setBounds(75,280,475,25);
         ePanel.add(addConfirmation);
 
         addConfirmationID = new JLabel("");
-        addConfirmationID.setBounds(150,270,200,25);
+        addConfirmationID.setBounds(150,310,200,25);
         ePanel.add(addConfirmationID);
 
         //Horizontal Line
         line1 = new JLabel("_______________________________________________________________________________________");
-        line1.setBounds(10,280,580,25);
+        line1.setBounds(10,320,580,25);
         ePanel.add(line1);
 
         //Delete employee
         deleteE = new JLabel("Delete Employee");
-        deleteE.setBounds(10,300,165,25);
+        deleteE.setBounds(10,340,165,25);
         ePanel.add(deleteE);
 
         deleteEName = new JLabel("Employee Name");
-        deleteEName.setBounds(10,330,100,25);
+        deleteEName.setBounds(10,370,100,25);
         ePanel.add(deleteEName);
 
         eNameDel = new JTextField();
-        eNameDel.setBounds(120,330,180,25);
+        eNameDel.setBounds(120,370,180,25);
         ePanel.add(eNameDel);
 
         deleteB  = new JButton("Delete");
-        deleteB.setBounds(310,330,80,25);
+        deleteB.setBounds(310,370,80,25);
         deleteB.addActionListener(this);
         ePanel.add(deleteB);
 
         deleteConfirmation = new JLabel("");
-        deleteConfirmation.setBounds(120,360,400,25);
+        deleteConfirmation.setBounds(120,400,400,25);
         ePanel.add(deleteConfirmation);
 
         eDirec = new JButton("Employee Directories");
-        eDirec.setBounds(150,410,300,25);
+        eDirec.setBounds(150,430,300,25);
         eDirec.addActionListener(this);
         ePanel.add(eDirec);
 
@@ -229,11 +241,32 @@ public class EmployeeManagement implements ActionListener {
         if (e.getSource() == addB) {
             String eNameIn = eName.getText();
             String eSalaryString = eSalary.getText();
+            String warehouseName = String.valueOf(cb.getSelectedItem());
+            int warehouseID;
+            switch(warehouseName) {
+                case "Quebec Street":
+                    warehouseID=1000;
+                    break;
+                case "Commercial Drive":
+                    warehouseID=1001;
+                    break;
+                case "Richmond":
+                    warehouseID=1002;
+                    break;
+                case "Wall Street":
+                    warehouseID=1003;
+                    break;
+                case "West Vancouver":
+                    warehouseID=1004;
+                    break;
+                default:
+                    warehouseID=0000;
+            }
             int eSalaryIn=-1;
             if (eSalaryString.matches("[0-9]+") && eSalaryString.length() > 0) {
                 eSalaryIn= Integer.parseInt(eSalaryString);
             }
-            //TODO generate new EmployeeID, how to deal with duplicated adds
+            //TODO deal with duplicated adds
             String addMsg;
             String addMsgID;
             if (eNameIn.equals("")|eSalaryIn==-1) {
@@ -244,7 +277,15 @@ public class EmployeeManagement implements ActionListener {
             }else {
                 addMsg = "Employee \"" + eNameIn + "\" with salary $" + eSalaryIn + " successfully added.";
                 addConfirmation.setForeground(submitMsgColorGreen);
-                addMsgID = "EmployeeID Assigned = ...";
+                Random rand = new Random();
+                int generatedEID = rand.nextInt(500);
+                addMsgID = "EmployeeID Assigned = " + generatedEID;
+                try{
+                    EmployeeContoller employeeContoller = new EmployeeContoller(db);
+                    employeeContoller.addEmployee(new Employee(generatedEID, eNameIn,warehouseID, eSalaryIn));
+                }catch(ServerErrorException serverErrorException){
+                    serverErrorException.printStackTrace();
+                }
             }
             addConfirmation.setText(addMsg);
             eName.setText("");
