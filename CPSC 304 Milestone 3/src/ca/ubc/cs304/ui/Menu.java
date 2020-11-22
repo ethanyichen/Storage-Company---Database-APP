@@ -49,7 +49,6 @@ public class Menu implements ActionListener {
         customer = new JButton("Customer");
         customer.setBounds(200,120,200,75);
         customer.setFont(f2);
-//        customer.setFont(new JLabel().getFont().deriveFont(25));
         customer.addActionListener(this);
         panel.add(customer);
 
@@ -69,7 +68,6 @@ public class Menu implements ActionListener {
             CustomerManagement customerManagement = new CustomerManagement(db);
             customerManagement.customerManagement();
         }
-
         if (e.getSource() == employee) {
             EmployeeManagement employeeManagement = new EmployeeManagement(db);
             employeeManagement.employeeManagement();

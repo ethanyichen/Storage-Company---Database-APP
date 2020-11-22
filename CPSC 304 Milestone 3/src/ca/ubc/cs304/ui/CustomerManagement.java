@@ -94,7 +94,7 @@ public class CustomerManagement implements ActionListener {
         cPanel.add(submitMessege);
 
         submitIDMessege = new JLabel("");
-        submitIDMessege.setBounds(150, 150, 200, 15);
+        submitIDMessege.setBounds(150, 150, 400, 15);
         cPanel.add(submitIDMessege);
 
         //Horizontal Line
@@ -202,8 +202,8 @@ public class CustomerManagement implements ActionListener {
             String cNameText = cName.getText();
             String cPhoneNumText = cPhoneNum.getText();
             int cphoneNumInt = -1;
-            if (cPhoneNumText.matches("[0-9]+") && cPhoneNumText.length() > 0) {
-                cphoneNumInt= Integer.parseInt(cPhoneNumText);
+            if (cPhoneNumText.matches("[0-9]+") && cPhoneNumText.length() > 0 &&cPhoneNumText.length()<=10) {
+                cphoneNumInt = 1;
             }
             //TODO generate new CustomerID, how to deal with duplicated adds
             String submitMsg;
@@ -216,13 +216,15 @@ public class CustomerManagement implements ActionListener {
                 submitMessege.setForeground(submitMsgColorGreen);
                 submitMsg = "Customer \"" + cNameText  + "\" with phone number" + cphoneNumInt + " successfully added.";
                 Random rand = new Random();
-                int generatedCID = rand.nextInt(500);
-                submitMsgID = "customerID Assigned = " + generatedCID ;
+                //TODO address same ID
+                int generatedCID = rand.nextInt(99999999);
+                submitMsgID = "customerID Assigned = " + generatedCID;
                 try {
                     CustomerController customerController = new CustomerController(db);
-                    customerController.addCustomer(new Customer(generatedCID, cNameText, String.valueOf(cphoneNumInt)));
+                    customerController.addCustomer(new Customer(generatedCID, cNameText, cPhoneNumText));
                 } catch (ServerErrorException serverErrorException) {
-                    serverErrorException.printStackTrace(); }
+                    serverErrorException.printStackTrace();
+                }
             }
             submitMessege.setText(submitMsg);
             cName.setText("");
@@ -246,6 +248,5 @@ public class CustomerManagement implements ActionListener {
             Directory customerDirectory = new Directory("Active Customer Directories:");
             customerDirectory.directory();
         }
-
     }
 }

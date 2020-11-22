@@ -1,15 +1,16 @@
 package ca.ubc.cs304.ui;
 
+import ca.ubc.cs304.database.CustomerController;
+import ca.ubc.cs304.model.Membership;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class CustomerNew implements ActionListener {
 
@@ -25,10 +26,15 @@ public class CustomerNew implements ActionListener {
     private String start;
     private int CUSTOMER_ID_DB;
     private String CUSTOMER_NAME_DB = "NULL";
+    CustomerController customerController;
 
-    public void CustomerNew(int CUSTOMER_ID_DB, String CUSTOMER_NAME_DB) {
+    public CustomerNew(int CUSTOMER_ID_DB, String CUSTOMER_NAME_DB, CustomerController customerController) {
         this.CUSTOMER_ID_DB = CUSTOMER_ID_DB;
         this.CUSTOMER_NAME_DB = CUSTOMER_NAME_DB;
+        this.customerController = customerController;
+    }
+
+    public void customerNew() {
         start = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
         panel = new JPanel();
@@ -114,17 +120,13 @@ public class CustomerNew implements ActionListener {
         line.setForeground(Color.decode("#222D6D"));
         choose.setForeground(Color.decode("#222D6D"));
 
-        choose.addItem("warehouse 1");
-        choose.addItem("warehouse 2");
+        choose.addItem("122");
+        choose.addItem("322");
 
         frame.pack();
         frame.setSize(600, 500);
         frame.setVisible(true);
     }
-
-
-
-
 
 
     @Override
@@ -135,12 +137,13 @@ public class CustomerNew implements ActionListener {
                 String newName = name.getText();
                 String newID = id.getText();
                 out.setText("Customer: " + newName + ", with ID: " + newID + " created at " + dropDown + " at " + date.getText());
+                customerController.addMember(new Membership(Integer.parseInt(dropDown), Integer.parseInt(newID), date.getText()));
             }
+        }
             else {
                 out.setText("Invalid input, please verify the fields");
             }
         }
-    }
 
     public static boolean isValidDate(String inDate) {
         String check = "";
