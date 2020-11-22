@@ -2,9 +2,11 @@ package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.CustomerController;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
+import ca.ubc.cs304.database.EmployeeContoller;
 import ca.ubc.cs304.exceptions.ServerErrorException;
 import ca.ubc.cs304.model.Box;
 import ca.ubc.cs304.model.Customer;
+import ca.ubc.cs304.model.Employee;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -87,12 +89,12 @@ public class Directory {
 
             private void listEmployeeDisplay () {
                 try {
-                    customerController = new CustomerController(db);
-                    ArrayList<Customer> customerList = customerController.allCustomer();
-                    for (int i = 0; i < customerList.size(); i++) {
-                        Customer curr = customerList.get(i);
-                        resultDisplay.append("Customer ID: " + curr.getCustomerID() + "|  Name: " +
-                                curr.getCustomerName() + "|  Phone Number: " + curr.getCustomerPhoneNum() + " \n");
+                    EmployeeContoller employeeController = new EmployeeContoller(db);
+                    ArrayList<Employee> employeeList = employeeController.allEmployee();
+                    for (int i = 0; i < employeeList.size(); i++) {
+                        Employee curr = employeeList.get(i);
+                        resultDisplay.append("Employee ID: " + curr.getEmployeeID() + " |  Name: " +
+                                curr.getEmployeeName() + " |  Hiring Warehouse ID: " + curr.getHiringWarehouseID() +"\n");
                     }
                 } catch (ServerErrorException serverErrorException) {
                     resultDisplay.append("Server Error");

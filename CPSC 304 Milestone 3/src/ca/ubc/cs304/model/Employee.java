@@ -8,9 +8,9 @@ public class Employee {
 
 
 
-    public Employee(Integer customerID, String customerName, Integer hiringWarehouseID, Integer salary) {
-        this.employeeID = customerID;
-        this.employeeName = customerName;
+    public Employee(Integer employeeID, String employeeName, Integer hiringWarehouseID, Integer salary) {
+        this.employeeID = employeeID;
+        this.employeeName = employeeName;
         this.salary=salary;
         this.hiringWarehouseID = hiringWarehouseID;
     }

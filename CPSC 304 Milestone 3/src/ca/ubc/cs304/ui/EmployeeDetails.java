@@ -15,6 +15,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EmployeeDetails implements ActionListener {
@@ -27,6 +28,7 @@ public class EmployeeDetails implements ActionListener {
     private JLabel updateConfirmation;
     private JLabel nameDisplay;
     private JLabel eIDDisplay;
+    private JLabel salaryDisplay;
     private JTextArea display;
 
     private String EMPLOYEE_NAME_DB = "NULL";
@@ -71,20 +73,28 @@ public class EmployeeDetails implements ActionListener {
 
             //Display Employee Search Results
             JLabel header = new JLabel("ID:");
-            header.setBounds(460, 40, 300, 25);
+            header.setBounds(320, 25, 300, 25);
             panel.add(header);
 
             eIDDisplay = new JLabel("");
-            eIDDisplay.setBounds(505, 40, 300, 20);
+            eIDDisplay.setBounds(380, 25, 300, 20);
             panel.add(eIDDisplay);
 
             JLabel headerName = new JLabel("Name:");
-            headerName.setBounds(460, 10, 165, 25);
+            headerName.setBounds(320, 5, 165, 25);
             panel.add(headerName);
 
             nameDisplay = new JLabel("");
-            nameDisplay.setBounds(505, 10, 300, 20);
+            nameDisplay.setBounds(380, 5, 300, 20);
             panel.add(nameDisplay);
+
+            JLabel headerSalary = new JLabel("Salary ($):");
+            headerSalary.setBounds(320, 45, 165, 25);
+            panel.add(headerSalary);
+
+            salaryDisplay = new JLabel("");
+            salaryDisplay.setBounds(380, 45, 300, 25);
+            panel.add(salaryDisplay);
 
             //Horizontal Line3
             JLabel line = new JLabel("_______________________________________________________________________________________");
@@ -153,6 +163,7 @@ public class EmployeeDetails implements ActionListener {
             title.setForeground(Color.decode("#222D6D"));
             header.setForeground(Color.decode("#222D6D"));
             headerName.setForeground(Color.decode("#222D6D"));
+            headerSalary.setForeground(Color.decode("#222D6D"));
             line.setForeground(Color.decode("#222D6D"));
             manages.setForeground(Color.decode("#222D6D"));
             line1.setForeground(Color.decode("#222D6D"));
@@ -164,6 +175,19 @@ public class EmployeeDetails implements ActionListener {
 
             nameDisplay.setText(EMPLOYEE_NAME_DB);
             eIDDisplay.setText(Integer.toString(eIDInt));
+            int salary =-1;
+            try{
+                EmployeeContoller employeeContoller = new EmployeeContoller(db);
+                salary = employeeContoller.getSalary(eIDInt);
+            }catch(ServerErrorException serverErrorException){
+                serverErrorException.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            if (salary == -1)
+                salaryDisplay.setText("No Salary. Update bellow.");
+            else
+                salaryDisplay.setText(Integer.toString(salary));
 
             frame.pack();
             frame.setSize(600, 500);
@@ -197,6 +221,7 @@ public class EmployeeDetails implements ActionListener {
             }
             updateConfirmation.setText(confirmation);
             newSalary.setText("");
+            salaryDisplay.setText(Integer.toString(newSalInt));
         }
     }
 }

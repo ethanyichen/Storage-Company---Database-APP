@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 public class EmployeeContoller extends Controller {
     private Connection connection;
-
     public EmployeeContoller(DatabaseConnectionHandler db) throws ServerErrorException {
         super(db);
         connection = super.connection;
@@ -32,6 +31,20 @@ public class EmployeeContoller extends Controller {
             e.printStackTrace();
         }
         return listWarehouse;
+    }
+
+    public int getSalary(int eIDInt) throws SQLException {
+        int salary= -1;
+        try{ Statement stmt = null;
+            stmt = this.connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT salary  FROM employeeSalary");
+            if(rs.next()){
+                salary = rs.getInt("salary");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return salary;
     }
 
     public ArrayList<Unit> allUnitsManaged(int EmployeeID) {
@@ -145,6 +158,22 @@ public class EmployeeContoller extends Controller {
             super.rollbackConnection();
         }
         return new Employee(ID,name,warehouseID,0);
+    }
+
+    public ArrayList<Employee> allEmployee() {
+        Statement stmt = null;
+        ArrayList<Employee> list = new ArrayList<>();
+        try {
+            stmt = this.connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT *  FROM Employee");
+            int eID;
+            while(rs.next()) {
+                list.add(new Employee(rs.getInt("employeeID"), rs.getString("eName"), rs.getInt("warehouseID"), -1) );
+            }
+        } catch (SQLException var4) {
+            var4.printStackTrace();
+        }
+        return list;
     }
 
 }
