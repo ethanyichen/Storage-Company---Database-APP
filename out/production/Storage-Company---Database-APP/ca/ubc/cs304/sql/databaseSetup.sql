@@ -30,8 +30,8 @@ CREATE TABLE use
 (
     cartID     INTEGER,
     employeeID INTEGER,
-    startTime  DATE,
-    endTime    DATE,
+    startTime  VARCHAR(10),
+    endTime    VARCHAR(10),
     PRIMARY KEY (cartID, employeeID),
     FOREIGN KEY (employeeID) REFERENCES Employee (employeeID) ON DELETE SET NULL
 );
@@ -50,8 +50,8 @@ CREATE TABLE Unit
     warehouseID INTEGER NOT NULL,
     employeeID  INTEGER NOT NULL,
     customerID  INTEGER,
-    startDate   DATE,
-    endDate     DATE,
+    startDate   VARCHAR(10),
+    endDate     VARCHAR(10),
     PRIMARY KEY (unitID),
     FOREIGN KEY (customerID) REFERENCES Customer (CustomerID) ON DELETE SET NULL,
     FOREIGN KEY (employeeID) REFERENCES Employee (employeeID),
@@ -62,7 +62,7 @@ CREATE TABLE ParkingSpace
 (
     parkNum    INTEGER,
     customerID INTEGER,
-    parkSince  Date,
+    parkSince  VARCHAR(10),
     UNIQUE (customerID),
     PRIMARY KEY (parkNum),
     FOREIGN KEY (customerID) REFERENCES Customer (customerID) ON DELETE SET NULL
@@ -89,14 +89,14 @@ CREATE TABLE Member
 (
     warehouseID         INTEGER NOT NULL,
     customerID          INTEGER,
-    membershipStartDate DATE,
+    membershipStartDate VARCHAR(10),
     PRIMARY KEY (warehouseID, customerID),
     FOREIGN KEY (warehouseID) REFERENCES Warehouse (warehouseID) ON DELETE CASCADE,
     FOREIGN KEY (customerID) REFERENCES Customer (customerID) ON DELETE CASCADE
 );
 CREATE TABLE rentFee
 (
-    startDate  DATE,
+    startDate  VARCHAR(10),
     capacity   INTEGER,
     monthlyFee INTEGER,
     PRIMARY KEY (startDate, capacity)
@@ -124,7 +124,7 @@ CREATE TABLE purchase
 (
     warehouseID INTEGER NOT NULL,
     cartID      INTEGER,
-    since       DATE,
+    since       VARCHAR(10),
     PRIMARY KEY (warehouseID, cartID),
     FOREIGN KEY (warehouseID) REFERENCES Warehouse (warehouseID) ON DELETE SET NULL,
     FOREIGN KEY (cartID) REFERENCES Cart (cartID)
@@ -144,6 +144,10 @@ INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('001','Bob','1000');
 INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('002','Tom','1000');
 INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('003','Sam','1000');
 INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('004','Kim','1000');
+
+INSERT INTO Member(warehouseID ,customerID,membershipStartDate) VALUES('1000','8385047','10-12-2020');
+INSERT INTO Member(warehouseID ,customerID,membershipStartDate) VALUES('1001','8381234','03-08-2020');
+INSERT INTO Member(warehouseID ,customerID,membershipStartDate) VALUES('1002','8383569','04-05-2019');
 
 INSERT INTO Unit(unitID, capacity, warehouseID, employeeID, customerID, startDate, endDate)
 VALUES ('100','100','1000','001','8385047','2020-05-20','2021-05-20');

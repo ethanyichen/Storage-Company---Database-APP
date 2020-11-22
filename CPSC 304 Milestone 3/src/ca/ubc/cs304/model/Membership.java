@@ -7,21 +7,21 @@ import java.sql.SQLException;
 public class Membership {
 
     private Connection connection;
-    private Integer warehouseID;
-    private Integer customerID;
+    private String warehouseID;
+    private String customerID;
     private String membershipStartDate;
 
-    public Membership(Integer warehouseID, Integer customerID, String membershipStartDate) {
+    public Membership(String warehouseID, String customerID, String membershipStartDate) {
         this.warehouseID = warehouseID;
         this.customerID = customerID;
         this.membershipStartDate = membershipStartDate;
     }
 
-    public Integer getWarehouseID() {
+    public String getWarehouseID() {
         return this.warehouseID;
     }
 
-    public Integer getCustomerID() {
+    public String getCustomerID() {
         return this.customerID;
     }
 

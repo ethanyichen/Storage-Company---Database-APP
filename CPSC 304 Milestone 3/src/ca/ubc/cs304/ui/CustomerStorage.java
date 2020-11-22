@@ -1,5 +1,7 @@
 package ca.ubc.cs304.ui;
 
+import ca.ubc.cs304.database.CustomerController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CustomerStorage implements ActionListener {
@@ -25,15 +28,17 @@ public class CustomerStorage implements ActionListener {
     private JComboBox<String> choose;
     private int CUSTOMER_ID_DB;
     private String CUSTOMER_NAME_DB;
+    private CustomerController customerController;
 
-    public CustomerStorage(int CUSTOMER_ID_DB, String CUSTOMER_NAME_DB) {
+    public CustomerStorage(int CUSTOMER_ID_DB, String CUSTOMER_NAME_DB, CustomerController customerController) {
         this.CUSTOMER_ID_DB = CUSTOMER_ID_DB;
         this.CUSTOMER_NAME_DB = CUSTOMER_NAME_DB;
+        this.customerController = customerController;
     }
 
 
     public void customerStorage() {
-        String startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
         panel = new JPanel();
         frame = new JFrame("Customer Management - New Storage");
@@ -79,7 +84,7 @@ public class CustomerStorage implements ActionListener {
         panel.add(selectWare);
 
         choose = new JComboBox<String>();
-        choose.setBounds(140, 190, 150, 25);
+        choose.setBounds(140, 190, 50, 25);
         panel.add(choose);
 
         JLabel feeDesc = new JLabel("Monthly Fee:");
@@ -139,8 +144,11 @@ public class CustomerStorage implements ActionListener {
         frame.setSize(600,500);
         frame.setVisible(true);
 
-        choose.addItem("warehouse 1");
-        choose.addItem("warehouse 2");
+        ArrayList<String> temp = customerController.currentWarehouse();
+
+        for (String s : temp) {
+            choose.addItem(s);
+        }
 
     }
 
@@ -164,7 +172,7 @@ public class CustomerStorage implements ActionListener {
             System.out.println(check);
             return false;
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         dateFormat.setLenient(false);
         try {
             dateFormat.parse(inDate.trim());

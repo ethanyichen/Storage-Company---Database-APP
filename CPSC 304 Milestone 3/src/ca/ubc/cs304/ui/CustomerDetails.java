@@ -159,7 +159,7 @@ public class CustomerDetails implements ActionListener {
         }
         if (e.getSource() == newStorage) {
             //TODO trigger new Storage Screen
-            CustomerStorage customerStorage = new CustomerStorage(CUSTOMER_ID_DB, CUSTOMER_NAME_DB);
+            CustomerStorage customerStorage = new CustomerStorage(CUSTOMER_ID_DB, CUSTOMER_NAME_DB, customerController);
             customerStorage.customerStorage();
         }
     }

@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class CustomerNew implements ActionListener {
 
@@ -35,7 +36,7 @@ public class CustomerNew implements ActionListener {
     }
 
     public void customerNew() {
-        start = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        start = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
         panel = new JPanel();
         frame = new JFrame("Customer Management - New Membership");
@@ -85,7 +86,7 @@ public class CustomerNew implements ActionListener {
         panel.add(selectWare);
 
         choose = new JComboBox<String>();
-        choose.setBounds(140, 190, 140, 25);
+        choose.setBounds(140, 190, 50, 25);
         panel.add(choose);
 
         JLabel dateDesc = new JLabel("Start Date:");
@@ -120,8 +121,11 @@ public class CustomerNew implements ActionListener {
         line.setForeground(Color.decode("#222D6D"));
         choose.setForeground(Color.decode("#222D6D"));
 
-        choose.addItem("122");
-        choose.addItem("322");
+        ArrayList<String> temp = customerController.currentWarehouse();
+
+        for (String s : temp) {
+            choose.addItem(s);
+        }
 
         frame.pack();
         frame.setSize(600, 500);
@@ -137,7 +141,7 @@ public class CustomerNew implements ActionListener {
                 String newName = name.getText();
                 String newID = id.getText();
                 out.setText("Customer: " + newName + ", with ID: " + newID + " created at " + dropDown + " at " + date.getText());
-                customerController.addMember(new Membership(Integer.parseInt(dropDown), Integer.parseInt(newID), date.getText()));
+                customerController.addMember(new Membership(dropDown, newID, date.getText()));
             }
         }
             else {
@@ -153,7 +157,7 @@ public class CustomerNew implements ActionListener {
         if (Integer.parseInt(check) < 2020) {
             return false;
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         dateFormat.setLenient(false);
         try {
             dateFormat.parse(inDate.trim());
