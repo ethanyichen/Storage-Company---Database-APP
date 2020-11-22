@@ -172,10 +172,13 @@ public class CustomerStorage implements ActionListener {
                     out1.setText("Storage for : " + CUSTOMER_NAME_DB + ", ID: " + CUSTOMER_ID_DB + " from " + start.getText() + " to " + end.getText() + " in " + choose.getSelectedItem() + " created ");
                     customerController.addRent(new Rent(wareID, cusID, feeCurr, startCurr, endCurr));
                     checkRent.add(wareID+cusID+startCurr);
+                } else {
+                    out1.setForeground(Color.decode("#990000"));
+                    out1.setText("Invalid input, please verify the fields");
                 }
             } else {
                 out1.setForeground(Color.decode("#990000"));
-                out1.setText("Invalid input, please verify the fields");
+                out1.setText("Customer " + CUSTOMER_NAME_DB+ " already renting at "+ wareID + " no changes done");
             }
         }
     }
