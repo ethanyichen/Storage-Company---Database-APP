@@ -4,6 +4,7 @@ import ca.ubc.cs304.database.CustomerController;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.database.EmployeeContoller;
 import ca.ubc.cs304.exceptions.CustomerSearchException;
+import ca.ubc.cs304.exceptions.EmployeeDeleteException;
 import ca.ubc.cs304.exceptions.EmployeeSearchException;
 import ca.ubc.cs304.exceptions.ServerErrorException;
 import ca.ubc.cs304.model.Customer;
@@ -31,7 +32,7 @@ public class EmployeeManagement implements ActionListener {
     private JTextField eID;
     private JLabel searchError;
     private JButton deleteB;
-    private JTextField eNameDel;
+    private JTextField eIDDel;
     private JLabel deleteConfirmation;
     private JButton eDirec;
     private JLabel searchT;
@@ -154,13 +155,13 @@ public class EmployeeManagement implements ActionListener {
         deleteE.setBounds(10,340,165,25);
         ePanel.add(deleteE);
 
-        deleteEName = new JLabel("Employee Name");
+        deleteEName = new JLabel("Employee ID");
         deleteEName.setBounds(10,370,100,25);
         ePanel.add(deleteEName);
 
-        eNameDel = new JTextField();
-        eNameDel.setBounds(120,370,180,25);
-        ePanel.add(eNameDel);
+        eIDDel = new JTextField();
+        eIDDel.setBounds(120,370,180,25);
+        ePanel.add(eIDDel);
 
         deleteB  = new JButton("Delete");
         deleteB.setBounds(310,370,80,25);
@@ -266,7 +267,6 @@ public class EmployeeManagement implements ActionListener {
             if (eSalaryString.matches("[0-9]+") && eSalaryString.length() > 0) {
                 eSalaryIn= Integer.parseInt(eSalaryString);
             }
-            //TODO deal with duplicated adds
             String addMsg;
             String addMsgID;
             if (eNameIn.equals("")|eSalaryIn==-1) {
@@ -278,11 +278,12 @@ public class EmployeeManagement implements ActionListener {
                 addMsg = "Employee \"" + eNameIn + "\" with salary $" + eSalaryIn + " successfully added.";
                 addConfirmation.setForeground(submitMsgColorGreen);
                 Random rand = new Random();
-                int generatedEID = rand.nextInt(500);
+                //todo repeated ID
+                int generatedEID = rand.nextInt(999);
                 addMsgID = "EmployeeID Assigned = " + generatedEID;
                 try{
                     EmployeeContoller employeeContoller = new EmployeeContoller(db);
-                    employeeContoller.addEmployee(new Employee(generatedEID, eNameIn,warehouseID, eSalaryIn));
+                    employeeContoller.addEmployee(new Employee(generatedEID, eNameIn, warehouseID, eSalaryIn));
                 }catch(ServerErrorException serverErrorException){
                     serverErrorException.printStackTrace();
                 }
@@ -294,20 +295,33 @@ public class EmployeeManagement implements ActionListener {
         }
 
         //delete button
-        //TODO fail case
         if (e.getSource() == deleteB) {
-            String eNameIn = eNameDel.getText();
+            String eIDin_STRING = eIDDel.getText();
+            int eIDin=-1;
+            if (eIDin_STRING.matches("[0-9]+") && eIDin_STRING.length() > 0) {
+                eIDin= Integer.parseInt(eIDin_STRING);
+            }
             String deleteMsg;
-            if(eNameIn.equals("")) {
+            if(eIDin==-1) {
                 deleteMsg = "Invalid input";
                 deleteConfirmation.setForeground(submitMsgColorRed);
             }
             else{
-                deleteMsg="Employee \"" +eNameIn+ "\" successfully deleted from Database.";
+                deleteMsg="Employee with ID " +eIDin+ " successfully deleted from Database.";
                 deleteConfirmation.setForeground(submitMsgColorGreen);
             }
+            try{
+                EmployeeContoller employeeContoller = new EmployeeContoller(db);
+                employeeContoller.delete(eIDin);
+            }catch (EmployeeDeleteException exception) {
+                deleteMsg = "Invalid input. Customer with id " +eIDin +" does not exist";
+                deleteConfirmation.setForeground(submitMsgColorRed);
+                exception.printStackTrace();
+            }catch(ServerErrorException serverErrorException){
+                serverErrorException.printStackTrace();
+            }
             deleteConfirmation.setText(deleteMsg);
-            eNameDel.setText("");
+            eIDDel.setText("");
         }
 
         //directory button

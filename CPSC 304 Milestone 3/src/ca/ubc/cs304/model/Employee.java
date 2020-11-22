@@ -5,7 +5,7 @@ public class Employee {
     private String employeeName;
     private Integer hiringWarehouseID;
     private Integer salary;
-   // private Integer employeeSalary;
+
 
 
     public Employee(Integer customerID, String customerName, Integer hiringWarehouseID, Integer salary) {
@@ -15,9 +15,6 @@ public class Employee {
         this.hiringWarehouseID = hiringWarehouseID;
     }
 
-    public Integer getHiringWarehouseID() {
-        return hiringWarehouseID;
-    }
 
     public void setHiringWarehouseID(Integer hiringWarehouseID) {
         this.hiringWarehouseID = hiringWarehouseID;
@@ -29,5 +26,11 @@ public class Employee {
     public String getEmployeeName() {
         return employeeName;
     }
-   // public Integer getHiringWarehouseID() {return hiringWarehouseID;}
+    public Integer getHiringWarehouseID() {
+        return hiringWarehouseID;
+    }
+    public Integer getSalary() {
+        return salary;
+    }
+
 }
