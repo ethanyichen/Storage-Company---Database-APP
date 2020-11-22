@@ -5,6 +5,7 @@ import ca.ubc.cs304.exceptions.ServerErrorException;
 import ca.ubc.cs304.model.Box;
 import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Membership;
+import ca.ubc.cs304.model.Rent;
 
 import javax.swing.plaf.nimbus.State;
 import java.sql.*;
@@ -27,6 +28,23 @@ public class CustomerController extends Controller {
             ps.setString(1, m.getWarehouseID());
             ps.setString(2, m.getCustomerID());
             ps.setString(3, m.getMembershipStartDate());
+            ps.executeUpdate();
+            connection.commit();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            super.rollbackConnection();
+        }
+    }
+
+    public void addRent(Rent m) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO Rent VALUES (?,?,?,?,?)");
+            ps.setString(1, m.getWarehouseID());
+            ps.setString(2, m.getCustomerID());
+            ps.setString(3, m.getMonthlyFee());
+            ps.setString(4, m.getStartDate());
+            ps.setString(5, m.getEndDate());
             ps.executeUpdate();
             connection.commit();
             ps.close();
@@ -221,6 +239,24 @@ public class CustomerController extends Controller {
                 String t1 = rs.getString("warehouseID");
                 String t2 = rs.getString("customerID");
                 soln.add(t1+t2);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return soln;
+    }
+
+    public HashSet<String> checkRent() {
+        HashSet<String> soln = new HashSet<>();
+        Statement stmt = null;
+        try {
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT warehouseID, customerID, startDate FROM RENT");
+            while(rs.next()) {
+                String t1 = rs.getString("warehouseID");
+                String t2 = rs.getString("customerID");
+                String t3 = rs.getString("startDate");
+                soln.add(t1+t2+t3);
             }
         } catch (SQLException e) {
             e.printStackTrace();

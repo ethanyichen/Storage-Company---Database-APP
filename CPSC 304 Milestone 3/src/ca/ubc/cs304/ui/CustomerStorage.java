@@ -1,6 +1,8 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.CustomerController;
+import ca.ubc.cs304.model.Membership;
+import ca.ubc.cs304.model.Rent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 
 public class CustomerStorage implements ActionListener {
 
@@ -29,6 +32,7 @@ public class CustomerStorage implements ActionListener {
     private int CUSTOMER_ID_DB;
     private String CUSTOMER_NAME_DB;
     private CustomerController customerController;
+    private HashSet<String> checkRent;
 
     public CustomerStorage(int CUSTOMER_ID_DB, String CUSTOMER_NAME_DB, CustomerController customerController) {
         this.CUSTOMER_ID_DB = CUSTOMER_ID_DB;
@@ -150,14 +154,27 @@ public class CustomerStorage implements ActionListener {
             choose.addItem(s);
         }
 
+        checkRent = customerController.checkRent();
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submit) {
-            if (fee.getText().matches("[0-9]+") && fee.getText().length() > 0 && isValidDate(end.getText()) && isValidDate(start.getText())) {
-                out1.setText("Storage for : " + CUSTOMER_NAME_DB + ", ID: " + CUSTOMER_ID_DB + " from " + start.getText() + " to " + end.getText() + " in " + choose.getSelectedItem() + " created ");
+            String feeCurr = fee.getText();
+            String endCurr = end.getText();
+            String startCurr = start.getText();
+            String cusID = id.getText();
+            String wareID = choose.getSelectedItem().toString();
+            if (!checkRent.contains(wareID+cusID+startCurr)) {
+                if (fee.getText().matches("[0-9]+") && fee.getText().length() > 0 && isValidDate(end.getText()) && isValidDate(start.getText())) {
+                    out1.setForeground(Color.decode("#0e6b0e"));
+                    out1.setText("Storage for : " + CUSTOMER_NAME_DB + ", ID: " + CUSTOMER_ID_DB + " from " + start.getText() + " to " + end.getText() + " in " + choose.getSelectedItem() + " created ");
+                    customerController.addRent(new Rent(wareID, cusID, feeCurr, startCurr, endCurr));
+                    checkRent.add(wareID+cusID+startCurr);
+                }
             } else {
+                out1.setForeground(Color.decode("#990000"));
                 out1.setText("Invalid input, please verify the fields");
             }
         }

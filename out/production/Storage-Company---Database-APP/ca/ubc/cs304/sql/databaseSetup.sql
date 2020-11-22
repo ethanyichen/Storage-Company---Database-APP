@@ -129,6 +129,18 @@ CREATE TABLE purchase
     FOREIGN KEY (warehouseID) REFERENCES Warehouse (warehouseID) ON DELETE SET NULL,
     FOREIGN KEY (cartID) REFERENCES Cart (cartID)
 );
+
+CREATE TABLE Rent (
+    warehouseID INTEGER,
+    customerID INTEGER,
+    monthlyFee INTEGER,
+    startDate  VARCHAR(10),
+    endDate  VARCHAR(10),
+    PRIMARY KEY (warehouseID, customerID, startDate),
+    FOREIGN KEY  (warehouseID) REFERENCES Warehouse (warehouseID) ON DELETE SET NULL,
+    FOREIGN KEY (customerID) REFERENCES Customer (customerID) ON DELETE CASCADE
+);
+
 INSERT INTO Customer(customerID,cName,phoneNum) VALUES('8385047','Baguette','6048059783');
 INSERT INTO Customer(customerID,cName,phoneNum) VALUES('8381234','Leonardo Dicaprio','6048059783');
 INSERT INTO Customer(customerID,cName,phoneNum) VALUES('8384567','Brad Pitt','6048059783');
@@ -162,6 +174,13 @@ INSERT INTO Box(boxID, unitID, customerID, boxSize) VALUES ('20','100','8385047'
 INSERT INTO Box(boxID, unitID, customerID, boxSize) VALUES ('25','101','8385047','50');
 INSERT INTO Box(boxID, unitID, customerID, boxSize) VALUES ('22','102','8385047','60');
 INSERT INTO Box(boxID, unitID, customerID, boxSize) VALUES ('23','102','8385047','90');
+
+INSERT INTO Rent (warehouseID, customerID, monthlyFee, startDate, endDate) VALUES
+('1001', '8385047', '3200', '20-05-2020', '20-07-2020');
+INSERT INTO Rent (warehouseID, customerID, monthlyFee, startDate, endDate) VALUES
+('1002', '8381234', '1200', '03-08-2020', '10-07-2021');
+INSERT INTO Rent (warehouseID, customerID, monthlyFee, startDate, endDate) VALUES
+('1003', '8383569', '3200', '12-05-2020', '10-08-2020');
 
 
 
