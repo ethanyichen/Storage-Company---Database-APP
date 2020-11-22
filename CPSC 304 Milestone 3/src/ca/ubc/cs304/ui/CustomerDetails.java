@@ -147,7 +147,7 @@ public class CustomerDetails implements ActionListener {
             ArrayList<Membership> membershipList = customerController.currentMemberShip();
             for (int i = 0; i < membershipList.size(); i++) {
                 Membership curr = membershipList.get(i);
-                resultDisplay.append("WarehouseID: " + membershipList.get(i).getWarehouseID() + "Start Date " +
+                resultDisplay.append("WarehouseID: " + membershipList.get(i).getWarehouseID() + "  Start Date " +
                         curr.getMembershipStartDate() + "\n");
             }
 

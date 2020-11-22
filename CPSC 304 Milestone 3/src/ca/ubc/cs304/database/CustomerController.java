@@ -85,17 +85,15 @@ public class CustomerController extends Controller {
         HashMap <Integer,Integer> ret = new HashMap<>();
         try {
             stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT unitID,COUNT(*) FROM Box WHERE customerID = " + customerID + " GROUP BY unitID");
-            if(rs.next()) {
-                ret.put(rs.getInt("unitID"),rs.getInt(2));
-                return ret;
-            } else{
-                return null;
+            ResultSet rs = stmt.executeQuery("SELECT unitID,COUNT(*) FROM Box WHERE customerID = " + customerID +
+                    " GROUP BY unitID ORDER BY unitID ASC");
+            while(rs.next()) {
+                ret.put(rs.getInt("unitID"),rs.getInt("COUNT(*)"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return ret;
     }
 
     public ArrayList<Box> currentStorage(){
@@ -137,11 +135,11 @@ public class CustomerController extends Controller {
         ArrayList<Membership> listOfMemberShip = new ArrayList<>();
         try {
             stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT wareHouseID membershipStartDate FROM Member " +
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Member " +
                     "WHERE customerID = " + customerID);
             while(rs.next()) {
-                listOfMemberShip.add(new Membership(rs.getString("wareHouseID"), String.valueOf(customerID),
-                        rs.getString("membershipStartDate")));
+                listOfMemberShip.add(new Membership(String.valueOf(rs.getInt("warehouseID")), String.valueOf(customerID),
+                        rs.getString("MEMBERSHIPSTARTDATE")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -162,5 +160,85 @@ public class CustomerController extends Controller {
             e.printStackTrace();
         }
         return listWarehouse;
+    }
+    public ArrayList<Customer> allCustomer() {
+        Statement stmt = null;
+        ArrayList<Customer> listOfCustomer = new ArrayList<>();
+
+        try {
+            stmt = this.connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT *  FROM Customer");
+
+            while(rs.next()) {
+                listOfCustomer.add(new Customer(rs.getInt("customerID"),
+                        rs.getString("cName"), rs.getString("phoneNum")));
+            }
+        } catch (SQLException var4) {
+            var4.printStackTrace();
+        }
+
+        return listOfCustomer;
+    }
+
+    public ArrayList<Customer> allActiveCustomer() {
+        Statement stmt = null;
+        ArrayList<Integer> listOfCustomerID = new ArrayList<>();
+        ArrayList<Customer> listOfCustomer = new ArrayList<>();
+
+        try {
+            stmt = this.connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT c.customerID  FROM Customer c, Box b WHERE c.customerID = b.customerID " +
+                    "GROUP BY c.customerID HAVING COUNT(*) > 3");
+
+            while(rs.next()) {
+                listOfCustomerID.add(rs.getInt("customerID"));
+            }
+            stmt = this.connection.createStatement();
+            for (int next : listOfCustomerID) {
+                ResultSet rs2 = stmt.executeQuery("SELECT *  FROM Customer WHERE customerID = " + next);
+                while(rs2.next()) {
+                    listOfCustomer.add(new Customer(rs2.getInt("customerID"),
+                            rs2.getString("cName"), rs2.getString("phoneNum")));
+                }
+            }
+
+        } catch (SQLException var4) {
+            var4.printStackTrace();
+        }
+
+        return listOfCustomer;
+    }
+
+    public ArrayList<Customer> customerOfAllMember() {
+        Statement stmt = null;
+        ArrayList<Integer> listOfCustomerID = new ArrayList<>();
+        ArrayList<Customer> listOfCustomer = new ArrayList<>();
+
+        try {
+            stmt = this.connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT c.customerID  FROM Customer c " +
+                    "WHERE NOT EXISTS  (SELECT w.warehouseID   " +
+                    "FROM Warehouse w WHERE NOT EXISTS " +
+                    "(SELECT m.warehouseID FROM Member m " +
+                    "WHERE m.customerID = c.customerID AND w.WAREHOUSEID = m.WAREHOUSEID))"
+   );
+
+            while(rs.next()) {
+                listOfCustomerID.add(rs.getInt("customerID"));
+            }
+            stmt = this.connection.createStatement();
+            for (int next : listOfCustomerID) {
+                ResultSet rs2 = stmt.executeQuery("SELECT *  FROM Customer WHERE customerID = " + next);
+                while(rs2.next()) {
+                    listOfCustomer.add(new Customer(rs2.getInt("customerID"),
+                            rs2.getString("cName"), rs2.getString("phoneNum")));
+                }
+            }
+
+        } catch (SQLException var4) {
+            var4.printStackTrace();
+        }
+
+        return listOfCustomer;
     }
 }
