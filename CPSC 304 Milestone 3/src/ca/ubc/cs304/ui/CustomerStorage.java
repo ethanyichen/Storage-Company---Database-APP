@@ -84,7 +84,7 @@ public class CustomerStorage implements ActionListener {
         panel.add(selectWare);
 
         choose = new JComboBox<String>();
-        choose.setBounds(140, 190, 50, 25);
+        choose.setBounds(140, 190, 87, 25);
         panel.add(choose);
 
         JLabel feeDesc = new JLabel("Monthly Fee:");

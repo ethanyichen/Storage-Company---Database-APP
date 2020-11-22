@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 public class Membership {
 
-    private Connection connection;
     private String warehouseID;
     private String customerID;
     private String membershipStartDate;
