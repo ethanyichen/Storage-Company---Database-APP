@@ -6,6 +6,7 @@ import ca.ubc.cs304.model.Box;
 import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Membership;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,8 +23,8 @@ public class CustomerController extends Controller {
     public void addMember(Membership m) {
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO Member VALUES (?,?,?)");
-            ps.setInt(1, m.getWarehouseID());
-            ps.setInt(2, m.getCustomerID());
+            ps.setString(1, m.getWarehouseID());
+            ps.setString(2, m.getCustomerID());
             ps.setString(3, m.getMembershipStartDate());
             ps.executeUpdate();
             connection.commit();
@@ -139,12 +140,27 @@ public class CustomerController extends Controller {
             ResultSet rs = stmt.executeQuery("SELECT wareHouseID membershipStartDate FROM Member " +
                     "WHERE customerID = " + customerID);
             while(rs.next()) {
-                listOfMemberShip.add(new Membership(rs.getInt("wareHouseID"), customerID,
+                listOfMemberShip.add(new Membership(rs.getString("wareHouseID"), String.valueOf(customerID),
                         rs.getString("membershipStartDate")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return listOfMemberShip;
+    }
+
+    public ArrayList<String> currentWarehouse() {
+        Statement stmt = null;
+        ArrayList<String> listWarehouse = new ArrayList<>();
+        try {
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT warehouseID FROM Warehouse");
+            while(rs.next()) {
+                listWarehouse.add(rs.getString("wareHouseID"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listWarehouse;
     }
 }
