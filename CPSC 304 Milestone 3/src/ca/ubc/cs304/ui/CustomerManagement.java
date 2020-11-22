@@ -235,17 +235,18 @@ public class CustomerManagement implements ActionListener {
 
         //directory button
         if (e.getSource() == cDirec) {
-            Directory customerDirectory = new Directory("Customer Directories:");
+            Directory customerDirectory = new Directory("Customer Directories:",db);
             customerDirectory.directory();
         }
 
         if (e.getSource() == memberOfAll) {
-            Directory customerDirectory = new Directory("Customer That is Member of Every Warehouse");
+            Directory customerDirectory = new
+                    Directory("Customer That is Member of Every Warehouse",db);
             customerDirectory.directory();
         }
 
         if (e.getSource() == activeCustomer) {
-            Directory customerDirectory = new Directory("Active Customer Directories:");
+            Directory customerDirectory = new Directory("Active Customer Directories:",db);
             customerDirectory.directory();
         }
     }

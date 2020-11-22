@@ -312,7 +312,7 @@ public class EmployeeManagement implements ActionListener {
 
         //directory button
         if (e.getSource() == eDirec) {
-            Directory directory = new Directory("Employee Directories");
+            Directory directory = new Directory("Employee Directories",db);
             directory.directory();
         }
 
