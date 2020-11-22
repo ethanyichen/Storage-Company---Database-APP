@@ -163,4 +163,21 @@ public class CustomerController extends Controller {
         }
         return listWarehouse;
     }
+    public ArrayList<Customer> allCustomer() {
+        Statement stmt = null;
+        ArrayList listOfCustomer = new ArrayList();
+
+        try {
+            stmt = this.connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT *  FROM Customer");
+
+            while(rs.next()) {
+                listOfCustomer.add(new Customer(rs.getInt("customerID"), rs.getString("cName"), rs.getString("phoneNum")));
+            }
+        } catch (SQLException var4) {
+            var4.printStackTrace();
+        }
+
+        return listOfCustomer;
+    }
 }
