@@ -19,7 +19,7 @@ public class Controller {
         connection = db.getConnection();
     }
 
-    
+
     public void rollbackConnection(){
         db.rollbackConnection();
     }
