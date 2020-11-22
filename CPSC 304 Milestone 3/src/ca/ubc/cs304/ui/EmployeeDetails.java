@@ -1,6 +1,9 @@
 package ca.ubc.cs304.ui;
 
+import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.database.EmployeeContoller;
+import ca.ubc.cs304.exceptions.EmployeeDeleteException;
+import ca.ubc.cs304.exceptions.ServerErrorException;
 import ca.ubc.cs304.model.Employee;
 
 import javax.swing.*;
@@ -23,12 +26,14 @@ public class EmployeeDetails implements ActionListener {
     private int EMPLOYEE_ID_DB = -1;
     private EmployeeContoller employeeContoller;
     private Employee employee;
+    private DatabaseConnectionHandler db;
 
-    public EmployeeDetails(EmployeeContoller employeeContoller, Employee employee) {
+    public EmployeeDetails(EmployeeContoller employeeContoller, Employee employee,DatabaseConnectionHandler db) {
         this.employeeContoller = employeeContoller;
         this.employee = employee;
         this.EMPLOYEE_NAME_DB = employee.getEmployeeName();
         this.EMPLOYEE_ID_DB = employee.getEmployeeID();
+        this.db = db;
     }
 
     public void employeeDetails(){
@@ -154,6 +159,12 @@ public class EmployeeDetails implements ActionListener {
             else {
                 confirmation = "Salary updated to $" + newSalInt + " for employee (ID): " + eIDInt;
                 updateConfirmation.setForeground(Color.decode("#0e6b0e"));
+            }
+            try{
+                EmployeeContoller employeeContoller = new EmployeeContoller(db);
+                employeeContoller.updateSalary(eIDInt,newSalInt);
+            }catch(ServerErrorException serverErrorException){
+                serverErrorException.printStackTrace();
             }
             updateConfirmation.setText(confirmation);
             newSalary.setText("");

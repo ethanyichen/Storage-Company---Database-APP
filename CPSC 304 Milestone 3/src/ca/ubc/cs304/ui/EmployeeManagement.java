@@ -233,7 +233,7 @@ public class EmployeeManagement implements ActionListener {
                 } else {
                     Employee employee = employeeController.searchEmployee(eID_INT);
                     eID.setText("");
-                    EmployeeDetails employeeDetails = new EmployeeDetails(employeeController,employee);
+                    EmployeeDetails employeeDetails = new EmployeeDetails(employeeController,employee,db);
                     employeeDetails.employeeDetails();
                 }
             } catch (EmployeeSearchException exception) {

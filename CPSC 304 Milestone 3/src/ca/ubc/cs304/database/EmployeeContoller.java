@@ -33,15 +33,20 @@ public class EmployeeContoller extends Controller {
         return listWarehouse;
     }
 
-    public int currentWarehouseID(String wName) {
+    public int currentWarehouseID(String name) {
         Statement stmt = null;
         int id =-1;
         try {
             stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT warehouseID FROM Warehouse");
+            ResultSet rs = stmt.executeQuery("SELECT wName, warehouseID FROM Warehouse");
             while(rs.next()) {
-                id = rs.getInt("warehouseID");
+                String tempS = rs.getString("wname");
+                int temp = rs.getInt("warehouseID");
+                if (tempS.equals(name))
+                    id = temp;
             }
+            rs.close();
+            stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,6 +80,19 @@ public class EmployeeContoller extends Controller {
                throw new EmployeeDeleteException(); //no employee with ID
             }
             PreparedStatement ps = connection.prepareStatement("DELETE FROM Employee WHERE employeeID= " + eID);
+            ps.executeUpdate();
+            connection.commit();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            super.rollbackConnection();
+        }
+    }
+
+    public void updateSalary(int employeeID, int newSalary){
+        try {
+            Statement stmt = connection.createStatement();
+            PreparedStatement ps = connection.prepareStatement("UPDATE EmployeeSalary SET Salary= " + newSalary + "WHERE employeeID= "+ employeeID);
             ps.executeUpdate();
             connection.commit();
             ps.close();
