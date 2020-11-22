@@ -85,17 +85,15 @@ public class CustomerController extends Controller {
         HashMap <Integer,Integer> ret = new HashMap<>();
         try {
             stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT unitID,COUNT(*) FROM Box WHERE customerID = " + customerID + " GROUP BY unitID");
-            if(rs.next()) {
-                ret.put(rs.getInt("unitID"),rs.getInt(2));
-                return ret;
-            } else{
-                return null;
+            ResultSet rs = stmt.executeQuery("SELECT unitID,COUNT(*) FROM Box WHERE customerID = " + customerID +
+                    " GROUP BY unitID ORDER BY unitID ASC");
+            while(rs.next()) {
+                ret.put(rs.getInt("unitID"),rs.getInt("COUNT(*)"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return ret;
     }
 
     public ArrayList<Box> currentStorage(){
@@ -199,8 +197,8 @@ public class CustomerController extends Controller {
             for (int next : listOfCustomerID) {
                 ResultSet rs2 = stmt.executeQuery("SELECT *  FROM Customer WHERE customerID = " + next);
                 while(rs2.next()) {
-                    listOfCustomer.add(new Customer(rs.getInt("customerID"),
-                            rs.getString("cName"), rs.getString("phoneNum")));
+                    listOfCustomer.add(new Customer(rs2.getInt("customerID"),
+                            rs2.getString("cName"), rs2.getString("phoneNum")));
                 }
             }
 
@@ -218,9 +216,11 @@ public class CustomerController extends Controller {
 
         try {
             stmt = this.connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT c.customerID  FROM Customer c, Member m " +
-                    "WHERE NOT EXISTS " + "(SELECT c.customerID   FROM Member m WHERE NOT EXISTS " +
-                    "(SELECT m.warehouseID FROM Member WHERE m.customerID = c.customerID))"
+            ResultSet rs = stmt.executeQuery("SELECT c.customerID  FROM Customer c " +
+                    "WHERE NOT EXISTS  (SELECT w.warehouseID   " +
+                    "FROM Warehouse w WHERE NOT EXISTS " +
+                    "(SELECT m.warehouseID FROM Member m " +
+                    "WHERE m.customerID = c.customerID AND w.WAREHOUSEID = m.WAREHOUSEID))"
    );
 
             while(rs.next()) {
@@ -230,8 +230,8 @@ public class CustomerController extends Controller {
             for (int next : listOfCustomerID) {
                 ResultSet rs2 = stmt.executeQuery("SELECT *  FROM Customer WHERE customerID = " + next);
                 while(rs2.next()) {
-                    listOfCustomer.add(new Customer(rs.getInt("customerID"),
-                            rs.getString("cName"), rs.getString("phoneNum")));
+                    listOfCustomer.add(new Customer(rs2.getInt("customerID"),
+                            rs2.getString("cName"), rs2.getString("phoneNum")));
                 }
             }
 

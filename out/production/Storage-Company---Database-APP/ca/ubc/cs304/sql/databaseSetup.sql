@@ -151,7 +151,15 @@ INSERT INTO Member(warehouseID ,customerID,membershipStartDate) VALUES('1002','8
 
 INSERT INTO Unit(unitID, capacity, warehouseID, employeeID, customerID, startDate, endDate)
 VALUES ('100','100','1000','001','8385047','2020-05-20','2021-05-20');
+INSERT INTO Unit(unitID, capacity, warehouseID, employeeID, customerID, startDate, endDate)
+VALUES ('101','200','1001','002','8385047','2020-05-20','2021-05-20');
+INSERT INTO Unit(unitID, capacity, warehouseID, employeeID, customerID, startDate, endDate)
+VALUES ('102','100','1002','002','8385047','2020-05-20','2021-05-20');
+INSERT INTO Unit(unitID, capacity, warehouseID, employeeID, customerID, startDate, endDate)
+VALUES ('103','200','1000','003','8385047','2020-05-20','2021-05-20');
 
 INSERT INTO Box(boxID, unitID, customerID, boxSize) VALUES ('20','100','8385047','20');
-
+INSERT INTO Box(boxID, unitID, customerID, boxSize) VALUES ('25','101','8385047','50');
+INSERT INTO Box(boxID, unitID, customerID, boxSize) VALUES ('22','102','8385047','60');
+INSERT INTO Box(boxID, unitID, customerID, boxSize) VALUES ('23','102','8385047','90');
 

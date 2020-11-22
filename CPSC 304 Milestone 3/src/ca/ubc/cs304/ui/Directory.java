@@ -67,7 +67,7 @@ public class Directory {
             case "Employee Directories": listEmployeeDisplay(); break;
             case "Customer That is Member of Every Warehouse": listCustomerMemberOfAllDisplay(); break;
             case "Active Customer Directories" :  listActiveCustomerDisplay(); break;
-            default: break;
+            default: System.out.println("No Directory Option Given");break;
         }
     }
         private void listCustomerDisplay() {
