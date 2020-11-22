@@ -1,6 +1,7 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.CustomerController;
+import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.Customer;
 
 import javax.swing.*;
@@ -11,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 
 public class CustomerDetails implements ActionListener {
 
@@ -149,13 +149,13 @@ public class CustomerDetails implements ActionListener {
         }
         if (e.getSource() == newMemberShip) {
             //TODO trigger new Membership Screen
-            CustomerNew customerNew = new CustomerNew();
-            customerNew.CustomerNew(CUSTOMER_ID_DB, CUSTOMER_NAME_DB);
+            CustomerNew customerNew = new CustomerNew(CUSTOMER_ID_DB, CUSTOMER_NAME_DB, customerController);
+            customerNew.customerNew();
         }
         if (e.getSource() == newStorage) {
             //TODO trigger new Storage Screen
-            CustomerStorage customerStorage = new CustomerStorage();
-            customerStorage.CustomerStorage(CUSTOMER_ID_DB, CUSTOMER_NAME_DB);
+            CustomerStorage customerStorage = new CustomerStorage(CUSTOMER_ID_DB, CUSTOMER_NAME_DB);
+            customerStorage.customerStorage();
         }
     }
 }
