@@ -61,7 +61,14 @@ public class Directory {
         cFrame.setSize(600, 500);
         cFrame.setVisible(true);
 
-        listCustomerDisplay();
+
+        switch (DIRECTORY_OPTION){
+            case "Customer Directories": listCustomerDisplay(); break;
+            case "Employee Directories": listEmployeeDisplay(); break;
+            case "Customer That is Member of Every Warehouse": listCustomerMemberOfAllDisplay(); break;
+            case "Active Customer Directories" :  listActiveCustomerDisplay(); break;
+            default: break;
+        }
     }
         private void listCustomerDisplay() {
             try {
@@ -77,5 +84,50 @@ public class Directory {
                 serverErrorException.printStackTrace();
             }
         }
+
+            private void listEmployeeDisplay () {
+                try {
+                    customerController = new CustomerController(db);
+                    ArrayList<Customer> customerList = customerController.allCustomer();
+                    for (int i = 0; i < customerList.size(); i++) {
+                        Customer curr = customerList.get(i);
+                        resultDisplay.append("Customer ID: " + curr.getCustomerID() + "|  Name: " +
+                                curr.getCustomerName() + "|  Phone Number: " + curr.getCustomerPhoneNum() + " \n");
+                    }
+                } catch (ServerErrorException serverErrorException) {
+                    resultDisplay.append("Server Error");
+                    serverErrorException.printStackTrace();
+                }
+            }
+
+    private void listCustomerMemberOfAllDisplay () {
+        try {
+            customerController = new CustomerController(db);
+            ArrayList<Customer> customerList = customerController.customerOfAllMember();
+            for (int i = 0; i < customerList.size(); i++) {
+                Customer curr = customerList.get(i);
+                resultDisplay.append("Customer ID: " + curr.getCustomerID() + "|  Name: " +
+                        curr.getCustomerName() + "|  Phone Number: " + curr.getCustomerPhoneNum() + " \n");
+            }
+        } catch (ServerErrorException serverErrorException) {
+            resultDisplay.append("Server Error");
+            serverErrorException.printStackTrace();
+        }
+    }
+    private void listActiveCustomerDisplay () {
+        try {
+            customerController = new CustomerController(db);
+            ArrayList<Customer> customerList = customerController.allActiveCustomer();
+            for (int i = 0; i < customerList.size(); i++) {
+                Customer curr = customerList.get(i);
+                resultDisplay.append("Customer ID: " + curr.getCustomerID() + "|  Name: " +
+                        curr.getCustomerName() + "|  Phone Number: " + curr.getCustomerPhoneNum() + " \n");
+            }
+        } catch (ServerErrorException serverErrorException) {
+            resultDisplay.append("Server Error");
+            serverErrorException.printStackTrace();
+        }
+    }
+
     }
 

@@ -235,7 +235,7 @@ public class CustomerManagement implements ActionListener {
 
         //directory button
         if (e.getSource() == cDirec) {
-            Directory customerDirectory = new Directory("Customer Directories:",db);
+            Directory customerDirectory = new Directory("Customer Directories",db);
             customerDirectory.directory();
         }
 
@@ -246,7 +246,7 @@ public class CustomerManagement implements ActionListener {
         }
 
         if (e.getSource() == activeCustomer) {
-            Directory customerDirectory = new Directory("Active Customer Directories:",db);
+            Directory customerDirectory = new Directory("Active Customer Directories",db);
             customerDirectory.directory();
         }
     }

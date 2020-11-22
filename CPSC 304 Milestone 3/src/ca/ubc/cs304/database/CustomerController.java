@@ -137,11 +137,11 @@ public class CustomerController extends Controller {
         ArrayList<Membership> listOfMemberShip = new ArrayList<>();
         try {
             stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT wareHouseID membershipStartDate FROM Member " +
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Member " +
                     "WHERE customerID = " + customerID);
             while(rs.next()) {
-                listOfMemberShip.add(new Membership(rs.getString("wareHouseID"), String.valueOf(customerID),
-                        rs.getString("membershipStartDate")));
+                listOfMemberShip.add(new Membership(String.valueOf(rs.getInt("warehouseID")), String.valueOf(customerID),
+                        rs.getString("MEMBERSHIPSTARTDATE")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -165,15 +165,76 @@ public class CustomerController extends Controller {
     }
     public ArrayList<Customer> allCustomer() {
         Statement stmt = null;
-        ArrayList listOfCustomer = new ArrayList();
+        ArrayList<Customer> listOfCustomer = new ArrayList<>();
 
         try {
             stmt = this.connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT *  FROM Customer");
 
             while(rs.next()) {
-                listOfCustomer.add(new Customer(rs.getInt("customerID"), rs.getString("cName"), rs.getString("phoneNum")));
+                listOfCustomer.add(new Customer(rs.getInt("customerID"),
+                        rs.getString("cName"), rs.getString("phoneNum")));
             }
+        } catch (SQLException var4) {
+            var4.printStackTrace();
+        }
+
+        return listOfCustomer;
+    }
+
+    public ArrayList<Customer> allActiveCustomer() {
+        Statement stmt = null;
+        ArrayList<Integer> listOfCustomerID = new ArrayList<>();
+        ArrayList<Customer> listOfCustomer = new ArrayList<>();
+
+        try {
+            stmt = this.connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT c.customerID  FROM Customer c, Box b WHERE c.customerID = b.customerID " +
+                    "GROUP BY c.customerID HAVING COUNT(*) > 3");
+
+            while(rs.next()) {
+                listOfCustomerID.add(rs.getInt("customerID"));
+            }
+            stmt = this.connection.createStatement();
+            for (int next : listOfCustomerID) {
+                ResultSet rs2 = stmt.executeQuery("SELECT *  FROM Customer WHERE customerID = " + next);
+                while(rs2.next()) {
+                    listOfCustomer.add(new Customer(rs.getInt("customerID"),
+                            rs.getString("cName"), rs.getString("phoneNum")));
+                }
+            }
+
+        } catch (SQLException var4) {
+            var4.printStackTrace();
+        }
+
+        return listOfCustomer;
+    }
+
+    public ArrayList<Customer> customerOfAllMember() {
+        Statement stmt = null;
+        ArrayList<Integer> listOfCustomerID = new ArrayList<>();
+        ArrayList<Customer> listOfCustomer = new ArrayList<>();
+
+        try {
+            stmt = this.connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT c.customerID  FROM Customer c, Member m " +
+                    "WHERE NOT EXISTS " + "(SELECT c.customerID   FROM Member m WHERE NOT EXISTS " +
+                    "(SELECT m.warehouseID FROM Member WHERE m.customerID = c.customerID))"
+   );
+
+            while(rs.next()) {
+                listOfCustomerID.add(rs.getInt("customerID"));
+            }
+            stmt = this.connection.createStatement();
+            for (int next : listOfCustomerID) {
+                ResultSet rs2 = stmt.executeQuery("SELECT *  FROM Customer WHERE customerID = " + next);
+                while(rs2.next()) {
+                    listOfCustomer.add(new Customer(rs.getInt("customerID"),
+                            rs.getString("cName"), rs.getString("phoneNum")));
+                }
+            }
+
         } catch (SQLException var4) {
             var4.printStackTrace();
         }
