@@ -161,6 +161,7 @@ public class CustomerController extends Controller {
         }
         return listWarehouse;
     }
+
     public ArrayList<Customer> allCustomer() {
         Statement stmt = null;
         ArrayList<Customer> listOfCustomer = new ArrayList<>();

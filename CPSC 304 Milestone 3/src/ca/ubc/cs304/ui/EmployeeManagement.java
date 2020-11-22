@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -50,7 +51,6 @@ public class EmployeeManagement implements ActionListener {
     private Color submitMsgColorGreen = Color.decode("#0e6b0e");
 
     private DatabaseConnectionHandler db;
-
     public EmployeeManagement(DatabaseConnectionHandler db) {
         this.db = db;
     }
@@ -126,8 +126,15 @@ public class EmployeeManagement implements ActionListener {
         addES.setBounds(200,210,70,25);
         ePanel.add(addES);
 
-        String[] warehouses = {"Quebec Street","Commercial Drive", "Richmond","Wall Street","West Vancouver"};
-        cb = new JComboBox<String>(warehouses);
+        cb = new JComboBox<String>();
+        try {
+            EmployeeContoller employeeController = new EmployeeContoller(db);
+            ArrayList<String> warehouses = employeeController.currentWarehouse();
+            for (String s : warehouses)
+                cb.addItem(s);
+        } catch (ServerErrorException e) {
+            e.printStackTrace();
+        }
         cb.setVisible(true);
         cb.setBounds(270,210,120,25);
         ePanel.add(cb);
@@ -243,25 +250,12 @@ public class EmployeeManagement implements ActionListener {
             String eNameIn = eName.getText();
             String eSalaryString = eSalary.getText();
             String warehouseName = String.valueOf(cb.getSelectedItem());
-            int warehouseID;
-            switch(warehouseName) {
-                case "Quebec Street":
-                    warehouseID=1000;
-                    break;
-                case "Commercial Drive":
-                    warehouseID=1001;
-                    break;
-                case "Richmond":
-                    warehouseID=1002;
-                    break;
-                case "Wall Street":
-                    warehouseID=1003;
-                    break;
-                case "West Vancouver":
-                    warehouseID=1004;
-                    break;
-                default:
-                    warehouseID=0000;
+            int warehouseID=-1;
+            try {
+                EmployeeContoller employeeController = new EmployeeContoller(db);
+                warehouseID = employeeController.currentWarehouseID(warehouseName);
+            } catch (ServerErrorException err) {
+                err.printStackTrace();
             }
             int eSalaryIn=-1;
             if (eSalaryString.matches("[0-9]+") && eSalaryString.length() > 0) {

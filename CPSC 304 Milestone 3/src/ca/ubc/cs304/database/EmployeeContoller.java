@@ -8,6 +8,7 @@ import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Employee;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class EmployeeContoller extends Controller {
     private Connection connection;
@@ -15,6 +16,36 @@ public class EmployeeContoller extends Controller {
     public EmployeeContoller(DatabaseConnectionHandler db) throws ServerErrorException {
         super(db);
         connection = super.connection;
+    }
+
+    public ArrayList<String> currentWarehouse() {
+        Statement stmt = null;
+        ArrayList<String> listWarehouse = new ArrayList<>();
+        try {
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT wName FROM Warehouse");
+            while(rs.next()) {
+                listWarehouse.add(rs.getString("wName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listWarehouse;
+    }
+
+    public int currentWarehouseID(String wName) {
+        Statement stmt = null;
+        int id =-1;
+        try {
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT warehouseID FROM Warehouse");
+            while(rs.next()) {
+                id = rs.getInt("warehouseID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 
     public void addEmployee(Employee em) {
