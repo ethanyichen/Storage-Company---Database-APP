@@ -86,7 +86,7 @@ public class CustomerNew implements ActionListener {
         panel.add(selectWare);
 
         choose = new JComboBox<String>();
-        choose.setBounds(140, 190, 50, 25);
+        choose.setBounds(140, 190, 87, 25);
         panel.add(choose);
 
         JLabel dateDesc = new JLabel("Start Date:");
@@ -140,21 +140,23 @@ public class CustomerNew implements ActionListener {
                 String dropDown = choose.getSelectedItem().toString();
                 String newName = name.getText();
                 String newID = id.getText();
+                out.setForeground(Color.decode("#0e6b0e"));
                 out.setText("Customer: " + newName + ", with ID: " + newID + " created at " + dropDown + " at " + date.getText());
                 customerController.addMember(new Membership(dropDown, newID, date.getText()));
-            }
-        }
-            else {
+            } else {
+                out.setForeground(Color.decode("#990000"));
                 out.setText("Invalid input, please verify the fields");
             }
         }
+    }
 
     public static boolean isValidDate(String inDate) {
         String check = "";
         for (int i = 6; i < inDate.length(); i++) {
             check += inDate.charAt(i);
         }
-        if (Integer.parseInt(check) < 2020) {
+        Integer temp = Integer.parseInt(check);
+        if (temp < 2020 || temp > 2100) {
             return false;
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
