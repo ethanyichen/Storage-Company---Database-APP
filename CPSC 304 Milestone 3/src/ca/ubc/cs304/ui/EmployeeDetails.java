@@ -1,15 +1,21 @@
 package ca.ubc.cs304.ui;
 
+import ca.ubc.cs304.database.CustomerController;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.database.EmployeeContoller;
 import ca.ubc.cs304.exceptions.EmployeeDeleteException;
 import ca.ubc.cs304.exceptions.ServerErrorException;
+import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Employee;
+import ca.ubc.cs304.model.Unit;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class EmployeeDetails implements ActionListener {
     private JFrame frame;
@@ -21,6 +27,7 @@ public class EmployeeDetails implements ActionListener {
     private JLabel updateConfirmation;
     private JLabel nameDisplay;
     private JLabel eIDDisplay;
+    private JTextArea display;
 
     private String EMPLOYEE_NAME_DB = "NULL";
     private int EMPLOYEE_ID_DB = -1;
@@ -28,7 +35,7 @@ public class EmployeeDetails implements ActionListener {
     private Employee employee;
     private DatabaseConnectionHandler db;
 
-    public EmployeeDetails(EmployeeContoller employeeContoller, Employee employee,DatabaseConnectionHandler db) {
+    public EmployeeDetails(EmployeeContoller employeeContoller, Employee employee, DatabaseConnectionHandler db) {
         this.employeeContoller = employeeContoller;
         this.employee = employee;
         this.EMPLOYEE_NAME_DB = employee.getEmployeeName();
@@ -36,7 +43,7 @@ public class EmployeeDetails implements ActionListener {
         this.db = db;
     }
 
-    public void employeeDetails(){
+    public void employeeDetails() {
         panel = new JPanel();
         frame = new JFrame("Employee Details");
         frame.add(panel, BorderLayout.CENTER);
@@ -45,103 +52,125 @@ public class EmployeeDetails implements ActionListener {
         panel.setLayout(null);
 
         JLabel title = new JLabel("Employee Details");
-        title.setBounds(10,15,500,40);
+        title.setBounds(10, 15, 500, 40);
         Font f = new Font("serif", Font.BOLD, 30);
         title.setFont(f);
         panel.add(title);
 
-        eIDInt=EMPLOYEE_ID_DB;
+        eIDInt = EMPLOYEE_ID_DB;
 
         //TODO invalid ID ??
-        if(eIDInt==-1) {
+        if (eIDInt == -1) {
             JLabel fail = new JLabel("invalid input");
             fail.setBounds(10, 300, 300, 50);
-            fail.setFont(new Font(null, Font.PLAIN,30));
+            fail.setFont(new Font(null, Font.PLAIN, 30));
             fail.setForeground(Color.decode("#990000"));
             panel.add(fail);
 
         } else {
 
-        //Display Employee Search Results
-        JLabel header = new JLabel ("ID:");
-        header.setBounds(460,40,300,25);
-        panel.add(header);
+            //Display Employee Search Results
+            JLabel header = new JLabel("ID:");
+            header.setBounds(460, 40, 300, 25);
+            panel.add(header);
 
-        eIDDisplay = new JLabel("");
-        eIDDisplay.setBounds(505,40,300,20);
-        panel.add(eIDDisplay);
+            eIDDisplay = new JLabel("");
+            eIDDisplay.setBounds(505, 40, 300, 20);
+            panel.add(eIDDisplay);
 
-        //TODO add result of search for Name
-        JLabel headerName = new JLabel ("Name:");
-        headerName.setBounds(460,10,165,25);
-        panel.add(headerName);
+            JLabel headerName = new JLabel("Name:");
+            headerName.setBounds(460, 10, 165, 25);
+            panel.add(headerName);
 
-        nameDisplay = new JLabel("");
-        nameDisplay.setBounds(505,10,300,20);
-        panel.add(nameDisplay);
+            nameDisplay = new JLabel("");
+            nameDisplay.setBounds(505, 10, 300, 20);
+            panel.add(nameDisplay);
 
-        //Horizontal Line3
-        JLabel line = new JLabel("_______________________________________________________________________________________");
-        line.setBounds(10,60,580,25);
-        panel.add(line);
+            //Horizontal Line3
+            JLabel line = new JLabel("_______________________________________________________________________________________");
+            line.setBounds(10, 60, 580, 25);
+            panel.add(line);
+            
+            JLabel manages = new JLabel("Manages: ");
+            manages.setBounds(10, 100, 165, 25);
+            panel.add(manages);
 
-        //TODO display results for manager
-        JLabel manages = new JLabel ("Manages: ");
-        manages.setBounds(10,100,165,25);
-        panel.add(manages);
+            JPanel displayPanel = new JPanel();
+            displayPanel.setBackground(Color.decode("#E5F1F6"));
+            displayPanel.setBounds(10, 130, 580, 200);
+            display = new JTextArea(12, 53);
+            display.setEditable(false);
+            JScrollPane scroll = new JScrollPane(display);
+            displayPanel.add(scroll);
+            panel.add(displayPanel);
 
-        //Horizontal Line
-        JLabel line1 = new JLabel("_______________________________________________________________________________________");
-        line1.setBounds(10,340,580,25);
-        panel.add(line1);
-
-        //Update Salary
-        JLabel updateS = new JLabel ("Update Salary ");
-        updateS.setBounds(10,370,165,25);
-        panel.add(updateS);
-
-        JLabel newSalaryLabel = new JLabel ("New Salary ");
-        newSalaryLabel.setBounds(10,400,100,25);
-        panel.add(newSalaryLabel);
-
-        newSalary = new JTextField();
-        newSalary.setBounds(120, 400,180,25);
-        panel.add(newSalary);
-
-        updateSal = new JButton("update");
-        updateSal.setBounds(310,400,80,25);
-        updateSal.addActionListener(this);
-        panel.add(updateSal);
-
-        updateConfirmation = new JLabel("");
-        updateConfirmation.setBounds(75,430,475,25);
-        panel.add(updateConfirmation);
-
-        panel.setBackground(Color.decode("#E5F1F6"));
-
-        title.setForeground(Color.decode("#222D6D"));
-        header.setForeground(Color.decode("#222D6D"));
-        headerName.setForeground(Color.decode("#222D6D"));
-        line.setForeground(Color.decode("#222D6D"));
-        manages.setForeground(Color.decode("#222D6D"));
-        line1.setForeground(Color.decode("#222D6D"));
-        updateS.setForeground(Color.decode("#222D6D"));
-        newSalaryLabel.setForeground(Color.decode("#222D6D"));
-
-        updateConfirmation.setForeground(Color.decode("#990000"));
+            try {
+                EmployeeContoller employeeContoller = new EmployeeContoller(db);
+                ArrayList<Unit> unitsManagesList = employeeContoller.allUnitsManaged(EMPLOYEE_ID_DB);
+                for (int i = 0; i < unitsManagesList.size(); i++) {
+                    Unit curr = unitsManagesList.get(i);
+                    display.append("UnitID: " + curr.getUnitID() + " |  Warehouse: " +
+                            curr.getWarehouseID() + " |  Customer ID: " + curr.getCustomerID() + " \n");
+                }
+                if (unitsManagesList.size()==0)
+                    display.append("no units currently managed by " + EMPLOYEE_NAME_DB);
+            } catch (ServerErrorException serverErrorException) {
+                display.append("Server Error");
+                serverErrorException.printStackTrace();
+            }
 
 
+            //Horizontal Line
+            JLabel line1 = new JLabel("_______________________________________________________________________________________");
+            line1.setBounds(10, 340, 580, 25);
+            panel.add(line1);
+
+            //Update Salary
+            JLabel updateS = new JLabel("Update Salary ");
+            updateS.setBounds(10, 370, 165, 25);
+            panel.add(updateS);
+
+            JLabel newSalaryLabel = new JLabel("New Salary ");
+            newSalaryLabel.setBounds(10, 400, 100, 25);
+            panel.add(newSalaryLabel);
+
+            newSalary = new JTextField();
+            newSalary.setBounds(120, 400, 180, 25);
+            panel.add(newSalary);
+
+            updateSal = new JButton("update");
+            updateSal.setBounds(310, 400, 80, 25);
+            updateSal.addActionListener(this);
+            panel.add(updateSal);
+
+            updateConfirmation = new JLabel("");
+            updateConfirmation.setBounds(75, 430, 475, 25);
+            panel.add(updateConfirmation);
+
+            panel.setBackground(Color.decode("#E5F1F6"));
 
 
+            title.setForeground(Color.decode("#222D6D"));
+            header.setForeground(Color.decode("#222D6D"));
+            headerName.setForeground(Color.decode("#222D6D"));
+            line.setForeground(Color.decode("#222D6D"));
+            manages.setForeground(Color.decode("#222D6D"));
+            line1.setForeground(Color.decode("#222D6D"));
+            updateS.setForeground(Color.decode("#222D6D"));
+            newSalaryLabel.setForeground(Color.decode("#222D6D"));
 
-        nameDisplay.setText(EMPLOYEE_NAME_DB);
-        eIDDisplay.setText(Integer.toString(eIDInt));
+            updateConfirmation.setForeground(Color.decode("#990000"));
 
-        frame.pack();
-        frame.setSize(600,500);
-        frame.setVisible(true);
+
+            nameDisplay.setText(EMPLOYEE_NAME_DB);
+            eIDDisplay.setText(Integer.toString(eIDInt));
+
+            frame.pack();
+            frame.setSize(600, 500);
+            frame.setVisible(true);
         }
     }
+
 
     public void actionPerformed(ActionEvent e) {
         //update button
@@ -157,7 +186,7 @@ public class EmployeeDetails implements ActionListener {
                 updateConfirmation.setForeground(Color.decode("#990000"));
             }
             else {
-                confirmation = "Salary updated to $" + newSalInt + " for employee (ID): " + eIDInt;
+                confirmation = "Salary updated to $" + newSalInt + " for employee: " + EMPLOYEE_NAME_DB;
                 updateConfirmation.setForeground(Color.decode("#0e6b0e"));
             }
             try{

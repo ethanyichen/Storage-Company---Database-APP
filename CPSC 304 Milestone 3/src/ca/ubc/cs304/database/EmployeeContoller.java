@@ -6,6 +6,7 @@ import ca.ubc.cs304.exceptions.EmployeeDeleteException;
 import ca.ubc.cs304.exceptions.ServerErrorException;
 import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Employee;
+import ca.ubc.cs304.model.Unit;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,6 +32,21 @@ public class EmployeeContoller extends Controller {
             e.printStackTrace();
         }
         return listWarehouse;
+    }
+
+    public ArrayList<Unit> allUnitsManaged(int EmployeeID) {
+        Statement stmt = null;
+        ArrayList<Unit> list = new ArrayList<>();
+        try {
+            stmt = this.connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT *  FROM Unit WHERE employeeID =" + EmployeeID);
+            while(rs.next()) {
+                list.add(new Unit(rs.getInt("UnitID"),
+                        rs.getInt("WarehouseID"), rs.getInt("CustomerID")));}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     public int currentWarehouseID(String name) {
