@@ -10,6 +10,7 @@ import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class CustomerController extends Controller {
     private Connection connection;
@@ -208,6 +209,23 @@ public class CustomerController extends Controller {
         }
 
         return listOfCustomer;
+    }
+
+    public HashSet<String> checkWarehouseMember() {
+        HashSet<String> soln = new HashSet<>();
+        Statement stmt = null;
+        try {
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT warehouseID, customerID FROM MEMBER");
+            while(rs.next()) {
+                String t1 = rs.getString("warehouseID");
+                String t2 = rs.getString("customerID");
+                soln.add(t1+t2);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return soln;
     }
 
     public ArrayList<Customer> customerOfAllMember() {

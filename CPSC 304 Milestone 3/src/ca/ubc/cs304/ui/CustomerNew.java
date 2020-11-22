@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class CustomerNew implements ActionListener {
 
@@ -28,6 +29,7 @@ public class CustomerNew implements ActionListener {
     private int CUSTOMER_ID_DB;
     private String CUSTOMER_NAME_DB = "NULL";
     CustomerController customerController;
+    HashSet<String> checkMem;
 
     public CustomerNew(int CUSTOMER_ID_DB, String CUSTOMER_NAME_DB, CustomerController customerController) {
         this.CUSTOMER_ID_DB = CUSTOMER_ID_DB;
@@ -122,10 +124,11 @@ public class CustomerNew implements ActionListener {
         choose.setForeground(Color.decode("#222D6D"));
 
         ArrayList<String> temp = customerController.currentWarehouse();
-
         for (String s : temp) {
             choose.addItem(s);
         }
+
+        checkMem = customerController.checkWarehouseMember();
 
         frame.pack();
         frame.setSize(600, 500);
@@ -136,16 +139,22 @@ public class CustomerNew implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submit) {
-            if (isValidDate(date.getText())) {
-                String dropDown = choose.getSelectedItem().toString();
-                String newName = name.getText();
-                String newID = id.getText();
-                out.setForeground(Color.decode("#0e6b0e"));
-                out.setText("Customer: " + newName + ", with ID: " + newID + " created at " + dropDown + " at " + date.getText());
-                customerController.addMember(new Membership(dropDown, newID, date.getText()));
+            String dropDown = choose.getSelectedItem().toString();
+            String newName = name.getText();
+            String newID = id.getText();
+            if (!checkMem.contains(dropDown + newID)) {
+                if (isValidDate(date.getText())) {
+                    out.setForeground(Color.decode("#0e6b0e"));
+                    out.setText("Customer: " + newName + ", with ID: " + newID + " created at " + dropDown + " at " + date.getText());
+                    customerController.addMember(new Membership(dropDown, newID, date.getText()));
+                    checkMem.add(dropDown + newID);
+                } else {
+                    out.setForeground(Color.decode("#990000"));
+                    out.setText("Invalid input, please verify the fields");
+                }
             } else {
                 out.setForeground(Color.decode("#990000"));
-                out.setText("Invalid input, please verify the fields");
+                out.setText("Customer is already member at " + dropDown + ", no changes done");
             }
         }
     }
