@@ -1,7 +1,7 @@
 package ca.ubc.cs304.database;
 
 import ca.ubc.cs304.exceptions.ServerErrorException;
-import ca.ubc.cs304.model.Member;
+import ca.ubc.cs304.model.Membership;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ public class MemberController extends Controller {
     }
 
 
-    public void addMember(Member m) {
+    public void addMember(Membership m) {
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO Member VALUES (?,?,?)");
             ps.setInt(1, m.getWarehouseID());

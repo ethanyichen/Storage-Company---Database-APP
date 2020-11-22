@@ -2,7 +2,9 @@ package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.CustomerController;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
+import ca.ubc.cs304.model.Box;
 import ca.ubc.cs304.model.Customer;
+import ca.ubc.cs304.model.Membership;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -131,21 +133,24 @@ public class CustomerDetails implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == currentStorage) {
-            HashMap<Integer,Integer> unitIDAndCount = customerController.currentStorageCount();
-            if(unitIDAndCount != null) {
-                ArrayList unitList = new ArrayList<>(unitIDAndCount.keySet());
-                resultDisplay.setText("Current Storage:\n");
-                //TODO deal with current Storage result
-                for (int i = 0; i < unitList.size(); i++) {
-                    resultDisplay.append("Unit " + unitList.get(i) + ": Currently storing  " +
-                            Integer.toString(unitIDAndCount.get(unitList.get(i))) + "  box(es)\n");
-                }
-            }
-            }
+            resultDisplay.setText("Current Storage:\n");
+            countDisplay();
+            resultDisplay.append("\n");
+            listOfBoxDisplay();
+            resultDisplay.append("\n");
+            maxAvgInAllUnit();
+
+        }
 
         if (e.getSource() == currentMembership) {
-            resultDisplay.setText("Current Membership:");
-            //TODO deal with current Storage result
+            resultDisplay.setText("Current Membership:\n");
+            ArrayList<Membership> membershipList = customerController.currentMemberShip();
+            for (int i = 0; i < membershipList.size(); i++) {
+                Membership curr = membershipList.get(i);
+                resultDisplay.append("WarehouseID: " + membershipList.get(i).getWarehouseID() + "Start Date " +
+                        curr.getMembershipStartDate() + "\n");
+            }
+
         }
         if (e.getSource() == newMemberShip) {
             //TODO trigger new Membership Screen
@@ -157,5 +162,33 @@ public class CustomerDetails implements ActionListener {
             CustomerStorage customerStorage = new CustomerStorage(CUSTOMER_ID_DB, CUSTOMER_NAME_DB);
             customerStorage.customerStorage();
         }
+    }
+
+    private void countDisplay() {
+        HashMap<Integer,Integer> unitIDAndCount = customerController.currentStorageCount();
+        if(unitIDAndCount != null) {
+            ArrayList unitList = new ArrayList<>(unitIDAndCount.keySet());
+            //TODO deal with current Storage result
+            for (int i = 0; i < unitList.size(); i++) {
+                resultDisplay.append("Unit " + unitList.get(i) + ": Currently storing  " +
+                        unitIDAndCount.get(unitList.get(i)) + "  box(es)\n");
+            }
+        }
+    }
+
+    private void listOfBoxDisplay() {
+        resultDisplay.append("List of Box(es): \n");
+        ArrayList<Box> boxList = customerController.currentStorage();
+        for (int i = 0; i < boxList.size(); i++) {
+            Box curr = boxList.get(i);
+            resultDisplay.append("Box ID: " + curr.getBoxID() + "  UnitID: " +
+                    curr.getStoringUnitID() + "  Size: " + curr.getSize() + " \n");
+        }
+    }
+
+    private void maxAvgInAllUnit() {
+        int[] unitIDAndMaxAvg = customerController.maxAvgSizeInAllUnit();
+        resultDisplay.append("Current Maximum Average Box Size in All Unit: " + unitIDAndMaxAvg[1] +"\n" +
+                "from UnitID " + unitIDAndMaxAvg[0] + " \n");
     }
 }

@@ -1,23 +1,16 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.CustomerController;
-import ca.ubc.cs304.database.DatabaseConnectionHandler;
-import ca.ubc.cs304.database.MemberController;
-import ca.ubc.cs304.exceptions.ServerErrorException;
-import ca.ubc.cs304.model.Customer;
-import ca.ubc.cs304.model.Member;
+import ca.ubc.cs304.model.Membership;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class CustomerNew implements ActionListener {
 
@@ -144,7 +137,7 @@ public class CustomerNew implements ActionListener {
                 String newName = name.getText();
                 String newID = id.getText();
                 out.setText("Customer: " + newName + ", with ID: " + newID + " created at " + dropDown + " at " + date.getText());
-                customerController.addMember(new Member(Integer.parseInt(dropDown), Integer.parseInt(newID), date.getText()));
+                customerController.addMember(new Membership(Integer.parseInt(dropDown), Integer.parseInt(newID), date.getText()));
             }
         }
             else {
