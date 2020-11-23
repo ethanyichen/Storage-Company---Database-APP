@@ -84,7 +84,7 @@ public class CustomerStorage implements ActionListener {
         line.setBounds(10,150,600,15);
         panel.add(line);
 
-        JLabel selectWare = new JLabel("Select Warehouse:");
+        JLabel selectWare = new JLabel("Select Unit:");
         selectWare.setBounds(10, 190, 120, 25);
         panel.add(selectWare);
 
