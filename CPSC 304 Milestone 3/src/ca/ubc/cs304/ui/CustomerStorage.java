@@ -143,7 +143,6 @@ public class CustomerStorage implements ActionListener {
         choose.setForeground(Color.decode("#222D6D"));
         line.setForeground(Color.decode("#222D6D"));
 
-
         frame.pack();
         frame.setSize(600,500);
         frame.setVisible(true);
@@ -153,7 +152,6 @@ public class CustomerStorage implements ActionListener {
         for (String s : temp) {
             choose.addItem(s);
         }
-
         checkRent = customerController.checkRent();
 
     }
@@ -167,23 +165,38 @@ public class CustomerStorage implements ActionListener {
             String cusID = id.getText();
             String wareID = choose.getSelectedItem().toString();
             if (!checkRent.contains(wareID+cusID+startCurr)) {
-                if (fee.getText().matches("[0-9]+") && fee.getText().length() > 0 && isValidDate(end.getText()) && isValidDate(start.getText())) {
-                    out1.setForeground(Color.decode("#0e6b0e"));
-                    out1.setText("Storage for : " + CUSTOMER_NAME_DB + ", ID: " + CUSTOMER_ID_DB + " from " + start.getText() + " to " + end.getText() + " in " + choose.getSelectedItem() + " created ");
-                    customerController.addRent(new Rent(wareID, cusID, feeCurr, startCurr, endCurr));
-                    checkRent.add(wareID+cusID+startCurr);
-                } else {
-                    out1.setForeground(Color.decode("#990000"));
-                    out1.setText("Invalid input, please verify the fields");
+                try {
+                    if (feeCurr.matches("[0-9]+") && feeCurr.length() > 0 && isValidDate(endCurr) && isValidDate(startCurr) && compare(startCurr,endCurr)) {
+                        out1.setForeground(Color.decode("#0e6b0e"));
+                        out1.setText("Storage for : " + CUSTOMER_NAME_DB + ", ID: " + CUSTOMER_ID_DB + " from " + start.getText() + " to " + end.getText() + " in " + choose.getSelectedItem() + " created ");
+                        customerController.addRent(new Rent(wareID, cusID, feeCurr, startCurr, endCurr));
+                        checkRent.add(wareID+cusID+startCurr);
+                    } else {
+                        out1.setForeground(Color.decode("#990000"));
+                        out1.setText("Invalid input, please verify the fields");
+                    }
+                } catch (ParseException parseException) {
+                    parseException.printStackTrace();
                 }
             } else {
                 out1.setForeground(Color.decode("#990000"));
                 out1.setText("Customer " + CUSTOMER_NAME_DB+ " already renting at "+ wareID + " no changes done");
             }
         }
+
+
     }
 
-    public static boolean isValidDate(String inDate) {
+
+    public boolean compare(String start, String end) throws ParseException {
+        Date d = new SimpleDateFormat("dd-MM-yyyy").parse(start);
+        Date d1 = new SimpleDateFormat("dd-MM-yyyy").parse(end);
+        return d.before(d1);
+    }
+
+
+
+    public boolean isValidDate(String inDate) {
         String check = "";
         for (int i = 6; i < inDate.length(); i++) {
             check += inDate.charAt(i);

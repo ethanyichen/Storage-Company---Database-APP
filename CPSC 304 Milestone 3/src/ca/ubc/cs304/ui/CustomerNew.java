@@ -160,7 +160,7 @@ public class CustomerNew implements ActionListener {
         }
     }
 
-    public static boolean isValidDate(String inDate) {
+    public boolean isValidDate(String inDate) {
         String check = "";
         for (int i = 6; i < inDate.length(); i++) {
             check += inDate.charAt(i);
