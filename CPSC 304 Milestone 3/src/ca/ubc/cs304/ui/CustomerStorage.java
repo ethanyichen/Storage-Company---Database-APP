@@ -33,6 +33,7 @@ public class CustomerStorage implements ActionListener {
     private String CUSTOMER_NAME_DB;
     private CustomerController customerController;
     private HashSet<String> checkRent;
+    private HashSet<String> checkMem;
 
     public CustomerStorage(int CUSTOMER_ID_DB, String CUSTOMER_NAME_DB, CustomerController customerController) {
         this.CUSTOMER_ID_DB = CUSTOMER_ID_DB;
@@ -149,6 +150,8 @@ public class CustomerStorage implements ActionListener {
 
         ArrayList<String> temp = customerController.currentWarehouse();
 
+        checkMem = customerController.checkWarehouseMember();
+
         for (String s : temp) {
             choose.addItem(s);
         }
@@ -166,14 +169,14 @@ public class CustomerStorage implements ActionListener {
             String wareID = choose.getSelectedItem().toString();
             if (!checkRent.contains(wareID+cusID+startCurr)) {
                 try {
-                    if (feeCurr.matches("[0-9]+") && feeCurr.length() > 0 && isValidDate(endCurr) && isValidDate(startCurr) && compare(startCurr,endCurr)) {
+                    if (feeCurr.matches("[0-9]+") && feeCurr.length() > 0 && isValidDate(endCurr) && isValidDate(startCurr) && compare(startCurr,endCurr)  && checkMem.contains(wareID+cusID)) {
                         out1.setForeground(Color.decode("#0e6b0e"));
                         out1.setText("Storage for : " + CUSTOMER_NAME_DB + ", ID: " + CUSTOMER_ID_DB + " from " + start.getText() + " to " + end.getText() + " in " + choose.getSelectedItem() + " created ");
                         customerController.addRent(new Rent(wareID, cusID, feeCurr, startCurr, endCurr));
                         checkRent.add(wareID+cusID+startCurr);
                     } else {
                         out1.setForeground(Color.decode("#990000"));
-                        out1.setText("Invalid input, please verify the fields");
+                        out1.setText("Invalid input, please verify the fields OR Customer is not a Member in selected Warehouse");
                     }
                 } catch (ParseException parseException) {
                     parseException.printStackTrace();
@@ -183,8 +186,6 @@ public class CustomerStorage implements ActionListener {
                 out1.setText("Customer " + CUSTOMER_NAME_DB+ " already renting at "+ wareID + " no changes done");
             }
         }
-
-
     }
 
 

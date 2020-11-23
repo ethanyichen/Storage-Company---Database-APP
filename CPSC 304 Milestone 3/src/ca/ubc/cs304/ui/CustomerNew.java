@@ -131,6 +131,7 @@ public class CustomerNew implements ActionListener {
 
         checkMem = customerController.checkWarehouseMember();
 
+
         frame.pack();
         frame.setSize(600, 500);
         frame.setVisible(true);
