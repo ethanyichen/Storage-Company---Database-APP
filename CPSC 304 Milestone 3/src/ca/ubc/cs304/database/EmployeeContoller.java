@@ -105,7 +105,7 @@ public class EmployeeContoller extends Controller {
         try {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Employee WHERE employeeID = " + eID);
-            if(rs.getRow()==1){
+            if(!rs.next()){
                throw new EmployeeDeleteException(); //no employee with ID
             }
             PreparedStatement ps = connection.prepareStatement("DELETE FROM Employee WHERE employeeID= " + eID);
