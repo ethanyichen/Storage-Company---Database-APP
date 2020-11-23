@@ -221,7 +221,8 @@ public class EmployeeDetails implements ActionListener {
             }
             updateConfirmation.setText(confirmation);
             newSalary.setText("");
-            salaryDisplay.setText(Integer.toString(newSalInt));
+            if (newSalInt>-1)
+                salaryDisplay.setText(Integer.toString(newSalInt));
         }
     }
 }

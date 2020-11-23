@@ -119,16 +119,16 @@ public class EmployeeContoller extends Controller {
     }
 
     public void updateSalary(int employeeID, int newSalary){
-        try {
-            Statement stmt = connection.createStatement();
-            PreparedStatement ps = connection.prepareStatement("UPDATE EmployeeSalary SET Salary= " + newSalary + "WHERE employeeID= "+ employeeID);
-            ps.executeUpdate();
-            connection.commit();
-            ps.close();
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-            super.rollbackConnection();
-        }
+           try {
+               Statement stmt = connection.createStatement();
+               PreparedStatement ps = connection.prepareStatement("UPDATE EmployeeSalary SET Salary= " + newSalary + "WHERE employeeID= "+ employeeID);
+               ps.executeUpdate();
+               connection.commit();
+               ps.close();
+           } catch (SQLException e) {
+               System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+               super.rollbackConnection();
+           }
     }
 
 
