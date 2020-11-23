@@ -148,9 +148,9 @@ public class CustomerStorage implements ActionListener {
         frame.setSize(600,500);
         frame.setVisible(true);
 
-        ArrayList<String> temp = customerController.currentWarehouse();
+        ArrayList<String> temp = customerController.currentWareUnit();
 
-        checkMem = customerController.checkWarehouseMember();
+        checkMem = customerController.checkMemberNew();
 
         for (String s : temp) {
             choose.addItem(s);
@@ -166,14 +166,14 @@ public class CustomerStorage implements ActionListener {
             String endCurr = end.getText();
             String startCurr = start.getText();
             String cusID = id.getText();
-            String wareID = choose.getSelectedItem().toString();
-            if (!checkRent.contains(wareID+cusID+startCurr)) {
+            String unitID = choose.getSelectedItem().toString();
+            if (!checkRent.contains(unitID+cusID)) {
                 try {
-                    if (feeCurr.matches("[0-9]+") && feeCurr.length() > 0 && isValidDate(endCurr) && isValidDate(startCurr) && compare(startCurr,endCurr)  && checkMem.contains(wareID+cusID)) {
+                    if (feeCurr.matches("[0-9]+") && isValidDate(endCurr) && isValidDate(startCurr) && compare(startCurr,endCurr) && customerController.checkMember(unitID, cusID)) {
                         out1.setForeground(Color.decode("#0e6b0e"));
                         out1.setText("Storage for : " + CUSTOMER_NAME_DB + ", ID: " + CUSTOMER_ID_DB + " from " + start.getText() + " to " + end.getText() + " in " + choose.getSelectedItem() + " created ");
-                        customerController.addRent(new Rent(wareID, cusID, feeCurr, startCurr, endCurr));
-                        checkRent.add(wareID+cusID+startCurr);
+                        customerController.addRent(new Rent(unitID, cusID, feeCurr, startCurr, endCurr));
+                        checkRent.add(unitID+cusID);
                     } else {
                         out1.setForeground(Color.decode("#990000"));
                         out1.setText("Invalid input, please verify the fields OR Customer is not a Member in selected Warehouse");
@@ -183,10 +183,11 @@ public class CustomerStorage implements ActionListener {
                 }
             } else {
                 out1.setForeground(Color.decode("#990000"));
-                out1.setText("Customer " + CUSTOMER_NAME_DB+ " already renting at "+ wareID + " no changes done");
+                out1.setText("Customer " + CUSTOMER_NAME_DB+ " already renting at "+ unitID + " no changes done");
             }
         }
     }
+
 
 
     public boolean compare(String start, String end) throws ParseException {
