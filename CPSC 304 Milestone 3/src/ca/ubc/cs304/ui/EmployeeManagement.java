@@ -261,6 +261,7 @@ public class EmployeeManagement implements ActionListener {
             if (eSalaryString.matches("[0-9]+") && eSalaryString.length() > 0) {
                 eSalaryIn= Integer.parseInt(eSalaryString);
             }
+            ////
             String addMsg;
             String addMsgID;
             if (eNameIn.equals("")|eSalaryIn==-1) {
