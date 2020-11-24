@@ -6,22 +6,22 @@ import java.sql.SQLException;
 
 public class Rent {
 
-    private String warehouseID;
+    private String unitID;
     private String customerID;
     private String monthlyFee;
     private String startDate;
     private String endDate;
 
-    public Rent(String warehouseID, String customerID, String monthlyFee, String startDate, String endDate) {
-        this.warehouseID = warehouseID;
+    public Rent(String unitID, String customerID, String monthlyFee, String startDate, String endDate) {
+        this.unitID = unitID;
         this.customerID = customerID;
         this.monthlyFee = monthlyFee;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public String getWarehouseID() {
-        return this.warehouseID;
+    public String getUnitID() {
+        return this.unitID;
     }
 
     public String getCustomerID() {
