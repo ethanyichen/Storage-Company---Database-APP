@@ -158,25 +158,25 @@ INSERT INTO Member(warehouseID ,customerID,membershipStartDate) VALUES('1001','8
 INSERT INTO Member(warehouseID ,customerID,membershipStartDate) VALUES('1002','8383569','04-05-2019');
 
 INSERT INTO Unit(unitID, capacity, warehouseID, employeeID)
-VALUES ('110','100','1000','001');
+VALUES ('110','100','1000','121');
 INSERT INTO Unit(unitID, capacity, warehouseID, employeeID)
-VALUES ('111','100','1000','001');
+VALUES ('111','100','1000','121');
 INSERT INTO Unit(unitID, capacity, warehouseID, employeeID)
-VALUES ('120','200','1001','002');
+VALUES ('120','200','1001','121');
 INSERT INTO Unit(unitID, capacity, warehouseID, employeeID)
-VALUES ('121','100','1001','002');
+VALUES ('121','100','1001','121');
 INSERT INTO Unit(unitID, capacity, warehouseID, employeeID)
-VALUES ('130','200','1002','002');
+VALUES ('130','200','1002','121');
 INSERT INTO Unit(unitID, capacity, warehouseID, employeeID)
-VALUES ('131','100','1002','002');
+VALUES ('131','100','1002','121');
 INSERT INTO Unit(unitID, capacity, warehouseID, employeeID)
-VALUES ('140','200','1003','002');
+VALUES ('140','200','1003','454');
 INSERT INTO Unit(unitID, capacity, warehouseID, employeeID)
-VALUES ('141','100','1003','002');
+VALUES ('141','100','1003','454');
 INSERT INTO Unit(unitID, capacity, warehouseID, employeeID)
-VALUES ('150','200','1004','002');
+VALUES ('150','200','1004','454');
 INSERT INTO Unit(unitID, capacity, warehouseID, employeeID)
-VALUES ('151','100','1004','002');
+VALUES ('151','100','1004','454');
 
 INSERT INTO Box(boxID, unitID, customerID, boxSize) VALUES ('20','110','8385047','20');
 INSERT INTO Box(boxID, unitID, customerID, boxSize) VALUES ('25','141','8385047','50');

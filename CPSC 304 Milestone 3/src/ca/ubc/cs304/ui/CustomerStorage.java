@@ -122,7 +122,7 @@ public class CustomerStorage implements ActionListener {
         submit.addActionListener(this);
 
         out1 = new JLabel("");
-        out1.setBounds(20, 400, 550, 25);
+        out1.setBounds(10, 400, 570, 25);
         panel.add(out1);
 
         title.setForeground(Color.decode("#222D6D"));
