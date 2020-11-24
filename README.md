@@ -15,5 +15,8 @@ For example, A user can input and search a customer id and the application will 
 ### Description of the application platform: 
 The platform our team has decided to use is the Computer Science department’s Oracle DBS with Java as the language, and our front end is Java Swing
 
-### Entity Relationship Diagram:
+###
+
+
+
 ![alt text](https://github.com/ethanyichen/Storage-Company---Database-APP/blob/main/ER%20Diagram.png)
