@@ -214,7 +214,7 @@ public class CustomerManagement implements ActionListener {
                 submitMsgID="";
             }else {
                 submitMessege.setForeground(submitMsgColorGreen);
-                submitMsg = "Customer \"" + cNameText  + "\" with phone number" + cphoneNumInt + " successfully added.";
+                submitMsg = "Customer \"" + cNameText  + "\" with phone number " + cPhoneNumText + " successfully added.";
                 Random rand = new Random();
                 //TODO address same ID
                 int generatedCID = rand.nextInt(99999999);

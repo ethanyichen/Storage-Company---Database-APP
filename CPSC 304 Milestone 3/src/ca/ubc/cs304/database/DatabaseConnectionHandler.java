@@ -22,8 +22,8 @@ public class DatabaseConnectionHandler {
     public static final String EXCEPTION_TAG = "[EXCEPTION]";
     public static final String WARNING_TAG = "[WARNING]";
 
-    public static final String DB_USERNAME = "ora_pisun";
-    public static final String DB_PASSWORD = "a84438175";
+    public static final String DB_USERNAME = "ora_eason123";
+    public static final String DB_PASSWORD = "a69398386";
 
     private Connection connection = null;
 
