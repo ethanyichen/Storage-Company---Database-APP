@@ -108,7 +108,7 @@ public class CustomerManagement implements ActionListener {
         searchCustomer.setFont(newCustomer.getFont().deriveFont(Font.BOLD));
         cPanel.add(searchCustomer);
 
-        JLabel customerIDLabel = new JLabel("CustomeID:");
+        JLabel customerIDLabel = new JLabel("CustomerID:");
         customerIDLabel.setBounds(10, 210, 100, 25);
         cPanel.add(customerIDLabel);
 
