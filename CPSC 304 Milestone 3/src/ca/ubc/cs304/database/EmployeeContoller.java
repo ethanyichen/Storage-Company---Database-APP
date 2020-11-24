@@ -1,10 +1,8 @@
 package ca.ubc.cs304.database;
 
-import ca.ubc.cs304.exceptions.CustomerSearchException;
 import ca.ubc.cs304.exceptions.EmployeeSearchException;
 import ca.ubc.cs304.exceptions.EmployeeDeleteException;
 import ca.ubc.cs304.exceptions.ServerErrorException;
-import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Employee;
 import ca.ubc.cs304.model.Unit;
 
@@ -55,7 +53,7 @@ public class EmployeeContoller extends Controller {
             ResultSet rs = stmt.executeQuery("SELECT *  FROM Unit WHERE employeeID =" + EmployeeID);
             while(rs.next()) {
                 list.add(new Unit(rs.getInt("UnitID"),
-                        rs.getInt("WarehouseID"), rs.getInt("CustomerID")));}
+                        rs.getInt("WarehouseID")));}
         } catch (SQLException e) {
             e.printStackTrace();
         }

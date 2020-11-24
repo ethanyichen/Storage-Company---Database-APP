@@ -15,11 +15,6 @@ public class Employee {
         this.hiringWarehouseID = hiringWarehouseID;
     }
 
-
-    public void setHiringWarehouseID(Integer hiringWarehouseID) {
-        this.hiringWarehouseID = hiringWarehouseID;
-    }
-
     public Integer getEmployeeID() {
         return employeeID;
     }

@@ -1,7 +1,6 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.CustomerController;
-import ca.ubc.cs304.model.Membership;
 import ca.ubc.cs304.model.Rent;
 
 import javax.swing.*;

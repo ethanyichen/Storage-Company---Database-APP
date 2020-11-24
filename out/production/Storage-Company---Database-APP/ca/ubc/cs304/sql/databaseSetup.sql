@@ -153,6 +153,11 @@ INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('454','Tom','1000');
 INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('132','Sam','1000');
 INSERT INTO Employee(employeeID,eName,warehouseID) VALUES('865','Kim','1000');
 
+INSERT INTO EMPLOYEESALARY(employeeID,salary) VALUES('121','1000');
+INSERT INTO EMPLOYEESALARY(employeeID,salary) VALUES('454','1000');
+INSERT INTO EMPLOYEESALARY(employeeID,salary) VALUES('132','1000');
+INSERT INTO EMPLOYEESALARY(employeeID,salary) VALUES('865','1000');
+
 INSERT INTO Member(warehouseID ,customerID,membershipStartDate) VALUES('1000','8385047','10-12-2020');
 INSERT INTO Member(warehouseID ,customerID,membershipStartDate) VALUES('1001','8381234','03-08-2020');
 INSERT INTO Member(warehouseID ,customerID,membershipStartDate) VALUES('1002','8383569','04-05-2019');

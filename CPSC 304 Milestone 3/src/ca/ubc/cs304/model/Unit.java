@@ -3,12 +3,10 @@ package ca.ubc.cs304.model;
 public class Unit {
     private Integer UnitID;
     private Integer WarehouseID;
-    private Integer CustomerID;
 
-    public Unit(Integer UnitID, Integer WarehouseID, Integer CustomerID) {
+    public Unit(Integer UnitID, Integer WarehouseID) {
         this.UnitID = UnitID;
         this.WarehouseID = WarehouseID;
-        this.CustomerID = CustomerID;
     }
 
     public Integer getUnitID() {
@@ -19,8 +17,5 @@ public class Unit {
         return WarehouseID;
     }
 
-    public Integer getCustomerID() {
-        return CustomerID;
-    }
 
 }

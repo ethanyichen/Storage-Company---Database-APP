@@ -4,7 +4,6 @@ import ca.ubc.cs304.database.CustomerController;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.database.EmployeeContoller;
 import ca.ubc.cs304.exceptions.ServerErrorException;
-import ca.ubc.cs304.model.Box;
 import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Employee;
 
@@ -44,7 +43,6 @@ public class Directory {
         cPanel.add(title);
 
 
-        // TODO fetch each option result
         JPanel rPanel = new JPanel();
         rPanel.setBounds(10, 70, 580, 390);
         rPanel.setBorder(new TitledBorder(new EtchedBorder(), DIRECTORY_OPTION, 0, 0,

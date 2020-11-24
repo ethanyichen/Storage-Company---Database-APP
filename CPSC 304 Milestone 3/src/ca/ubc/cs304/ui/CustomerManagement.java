@@ -85,7 +85,6 @@ public class CustomerManagement implements ActionListener {
         cPanel.add(submit);
         cLabel = new JLabel();
         cPanel.add(cLabel);
-        //backend submit, and generate cID
         submit.addActionListener(this);
 
 
@@ -205,7 +204,6 @@ public class CustomerManagement implements ActionListener {
             if (cPhoneNumText.matches("[0-9]+") && cPhoneNumText.length() > 0 &&cPhoneNumText.length()<=10) {
                 cphoneNumInt = 1;
             }
-            //TODO generate new CustomerID, how to deal with duplicated adds
             String submitMsg;
             String submitMsgID;
             if (cNameText.equals("")|cphoneNumInt==-1) {
@@ -216,7 +214,6 @@ public class CustomerManagement implements ActionListener {
                 submitMessege.setForeground(submitMsgColorGreen);
                 submitMsg = "Customer \"" + cNameText  + "\" with phone number " + cPhoneNumText + " successfully added.";
                 Random rand = new Random();
-                //TODO address same ID
                 int generatedCID = rand.nextInt(99999999);
                 submitMsgID = "customerID Assigned = " + generatedCID;
                 try {

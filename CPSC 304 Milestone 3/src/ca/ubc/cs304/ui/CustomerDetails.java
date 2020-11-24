@@ -1,7 +1,6 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.CustomerController;
-import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.Box;
 import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Membership;
@@ -120,7 +119,6 @@ public class CustomerDetails implements ActionListener {
         rPanel.setForeground(Color.decode("#222D6D"));
 
 
-        //TODO set name and ID to the customer currently in progress
         nameDisplay.setText(CUSTOMER_NAME_DB);
         cIDDisplay.setText(Integer.toString(CUSTOMER_ID_DB));
 
@@ -153,12 +151,10 @@ public class CustomerDetails implements ActionListener {
 
         }
         if (e.getSource() == newMemberShip) {
-            //TODO trigger new Membership Screen
             CustomerNew customerNew = new CustomerNew(CUSTOMER_ID_DB, CUSTOMER_NAME_DB, customerController);
             customerNew.customerNew();
         }
         if (e.getSource() == newStorage) {
-            //TODO trigger new Storage Screen
             CustomerStorage customerStorage = new CustomerStorage(CUSTOMER_ID_DB, CUSTOMER_NAME_DB, customerController);
             customerStorage.customerStorage();
         }
@@ -168,7 +164,6 @@ public class CustomerDetails implements ActionListener {
         HashMap<Integer,Integer> unitIDAndCount = customerController.currentStorageCount();
         if(unitIDAndCount != null) {
             ArrayList unitList = new ArrayList<>(unitIDAndCount.keySet());
-            //TODO deal with current Storage result
             for (int i = 0; i < unitList.size(); i++) {
                 resultDisplay.append("Unit " + unitList.get(i) + ": Currently storing  " +
                         unitIDAndCount.get(unitList.get(i)) + "  box(es)\n");

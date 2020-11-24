@@ -10,8 +10,6 @@ import ca.ubc.cs304.model.Employee;
 import ca.ubc.cs304.model.Unit;
 
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +20,6 @@ public class EmployeeDetails implements ActionListener {
     private JFrame frame;
     private JPanel panel;
     private int eIDInt;
-    private String eName;
     private JButton updateSal;
     private JTextField newSalary;
     private JLabel updateConfirmation;
@@ -108,7 +105,7 @@ public class EmployeeDetails implements ActionListener {
             JPanel displayPanel = new JPanel();
             displayPanel.setBackground(Color.decode("#E5F1F6"));
             displayPanel.setBounds(10, 130, 580, 200);
-            display = new JTextArea(12, 53);
+            display = new JTextArea(12, 40);
             display.setEditable(false);
             JScrollPane scroll = new JScrollPane(display);
             displayPanel.add(scroll);
@@ -120,7 +117,7 @@ public class EmployeeDetails implements ActionListener {
                 for (int i = 0; i < unitsManagesList.size(); i++) {
                     Unit curr = unitsManagesList.get(i);
                     display.append("UnitID: " + curr.getUnitID() + " |  Warehouse: " +
-                            curr.getWarehouseID() + " |  Customer ID: " + curr.getCustomerID() + " \n");
+                            curr.getWarehouseID() + " \n");
                 }
                 if (unitsManagesList.size()==0)
                     display.append("no units currently managed by " + EMPLOYEE_NAME_DB);
@@ -139,6 +136,7 @@ public class EmployeeDetails implements ActionListener {
             JLabel updateS = new JLabel("Update Salary ");
             updateS.setBounds(10, 370, 165, 25);
             panel.add(updateS);
+            updateS.setFont(updateS.getFont().deriveFont(Font.BOLD));
 
             JLabel newSalaryLabel = new JLabel("New Salary ");
             newSalaryLabel.setBounds(10, 400, 100, 25);
@@ -152,6 +150,7 @@ public class EmployeeDetails implements ActionListener {
             updateSal.setBounds(310, 400, 80, 25);
             updateSal.addActionListener(this);
             panel.add(updateSal);
+            updateSal.setFont(updateSal.getFont().deriveFont(Font.BOLD));
 
             updateConfirmation = new JLabel("");
             updateConfirmation.setBounds(75, 430, 475, 25);
@@ -168,6 +167,7 @@ public class EmployeeDetails implements ActionListener {
             manages.setForeground(Color.decode("#222D6D"));
             line1.setForeground(Color.decode("#222D6D"));
             updateS.setForeground(Color.decode("#222D6D"));
+            updateSal.setForeground(Color.decode("#222D6D"));
             newSalaryLabel.setForeground(Color.decode("#222D6D"));
 
             updateConfirmation.setForeground(Color.decode("#990000"));

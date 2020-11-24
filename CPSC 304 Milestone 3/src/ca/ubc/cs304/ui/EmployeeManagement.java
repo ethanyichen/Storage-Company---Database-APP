@@ -1,13 +1,10 @@
 package ca.ubc.cs304.ui;
 
-import ca.ubc.cs304.database.CustomerController;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.database.EmployeeContoller;
-import ca.ubc.cs304.exceptions.CustomerSearchException;
 import ca.ubc.cs304.exceptions.EmployeeDeleteException;
 import ca.ubc.cs304.exceptions.EmployeeSearchException;
 import ca.ubc.cs304.exceptions.ServerErrorException;
-import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Employee;
 
 import javax.swing.*;
@@ -19,7 +16,6 @@ import java.util.Random;
 
 
 public class EmployeeManagement implements ActionListener {
-    private int count = 0;
     private JLabel title;
     private JFrame eFrame;
     private JLabel eLabel;
@@ -75,6 +71,7 @@ public class EmployeeManagement implements ActionListener {
         searchT = new JLabel("Search Employee");
         searchT.setBounds(10,60,150,25);
         ePanel.add(searchT);
+        searchT.setFont(searchT.getFont().deriveFont(Font.BOLD));
 
         search = new JLabel("EmployeeID");
         search.setBounds(10,90,80,25);
@@ -86,6 +83,7 @@ public class EmployeeManagement implements ActionListener {
 
         searchB = new JButton("Search");
         searchB.setBounds(310,90,80,25);
+        searchB.setFont(searchB.getFont().deriveFont(Font.BOLD));
         //change on submit
         searchB.addActionListener(this);
         ePanel.add(searchB);
@@ -105,6 +103,7 @@ public class EmployeeManagement implements ActionListener {
         addT = new JLabel("Add Employee");
         addT.setBounds(10,150,165,25);
         ePanel.add(addT);
+        addT.setFont(addT.getFont().deriveFont(Font.BOLD));
 
         addE = new JLabel("Employee Name");
         addE.setBounds(10,180,100,25);
@@ -136,13 +135,14 @@ public class EmployeeManagement implements ActionListener {
             e.printStackTrace();
         }
         cb.setVisible(true);
-        cb.setBounds(270,210,120,25);
+        cb.setBounds(270,210,200,25);
         ePanel.add(cb);
 
         addB = new JButton("Add");
         addB.setBounds(245,250,80,25);
         addB.addActionListener(this);
         ePanel.add(addB);
+        addB.setFont(addB.getFont().deriveFont(Font.BOLD));
 
         addConfirmation = new JLabel("");
         addConfirmation.setBounds(75,280,475,25);
@@ -161,6 +161,7 @@ public class EmployeeManagement implements ActionListener {
         deleteE = new JLabel("Delete Employee");
         deleteE.setBounds(10,340,165,25);
         ePanel.add(deleteE);
+        deleteE.setFont(deleteE.getFont().deriveFont(Font.BOLD));
 
         deleteEName = new JLabel("Employee ID");
         deleteEName.setBounds(10,370,100,25);
@@ -174,6 +175,7 @@ public class EmployeeManagement implements ActionListener {
         deleteB.setBounds(310,370,80,25);
         deleteB.addActionListener(this);
         ePanel.add(deleteB);
+        deleteB.setFont(deleteB.getFont().deriveFont(Font.BOLD));
 
         deleteConfirmation = new JLabel("");
         deleteConfirmation.setBounds(120,400,400,25);
@@ -183,6 +185,7 @@ public class EmployeeManagement implements ActionListener {
         eDirec.setBounds(150,430,300,25);
         eDirec.addActionListener(this);
         ePanel.add(eDirec);
+        eDirec.setFont(eDirec.getFont().deriveFont(Font.BOLD));
 
         ePanel.setBackground(Color.decode("#E5F1F6"));
 
@@ -273,7 +276,6 @@ public class EmployeeManagement implements ActionListener {
                 addMsg = "Employee \"" + eNameIn + "\" with salary $" + eSalaryIn + " successfully added.";
                 addConfirmation.setForeground(submitMsgColorGreen);
                 Random rand = new Random();
-                //todo repeated ID
                 int generatedEID = rand.nextInt(999);
                 addMsgID = "EmployeeID Assigned = " + generatedEID;
                 try{

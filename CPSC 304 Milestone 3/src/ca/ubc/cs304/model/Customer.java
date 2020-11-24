@@ -15,24 +15,12 @@ public class Customer {
         return customerID;
     }
 
-    public void setCustomerID(Integer customerID) {
-        this.customerID = customerID;
-    }
-
     public String getCustomerName() {
         return customerName;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
     public String getCustomerPhoneNum() {
         return customerPhoneNum;
-    }
-
-    public void setCustomerPhoneNum(String customerPhoneNum) {
-        this.customerPhoneNum = customerPhoneNum;
     }
 
 }

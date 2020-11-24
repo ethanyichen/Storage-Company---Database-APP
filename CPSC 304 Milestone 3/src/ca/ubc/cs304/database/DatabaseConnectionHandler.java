@@ -4,11 +4,7 @@ import ca.ubc.cs304.exceptions.ServerErrorException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
 
 /**
@@ -22,8 +18,8 @@ public class DatabaseConnectionHandler {
     public static final String EXCEPTION_TAG = "[EXCEPTION]";
     public static final String WARNING_TAG = "[WARNING]";
 
-    public static final String DB_USERNAME = "ora_eason123";
-    public static final String DB_PASSWORD = "a69398386";
+    public static final String DB_USERNAME = "put your username here";
+    public static final String DB_PASSWORD = "put your password here";
 
     private Connection connection = null;
 
