@@ -36,11 +36,25 @@ public class CustomerController extends Controller {
             super.rollbackConnection();
         }
     }
+    public ArrayList<String> currentWareUnit() {
+        Statement stmt = null;
+        ArrayList<String> listWarehouse = new ArrayList<>();
+        try {
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT unitID FROM Unit");
+            while(rs.next()) {
+                listWarehouse.add(rs.getString("unitID"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listWarehouse;
+    }
 
     public void addRent(Rent m) {
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO Rent VALUES (?,?,?,?,?)");
-            ps.setString(1, m.getWarehouseID());
+            ps.setString(1, m.getUnitID());
             ps.setString(2, m.getCustomerID());
             ps.setString(3, m.getMonthlyFee());
             ps.setString(4, m.getStartDate());
@@ -229,7 +243,25 @@ public class CustomerController extends Controller {
         return listOfCustomer;
     }
 
-    public HashSet<String> checkWarehouseMember() {
+
+    public boolean checkMember(String unitID1, String customerID1) {
+        Statement stmt = null;
+        String temp = "";
+        try {
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT warehouseID FROM Unit WHERE unitID ="+unitID1);
+            while(rs.next()) {
+                String t1 = rs.getString("warehouseID");
+                temp = t1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return checkMemberNew().contains(temp+customerID1);
+    }
+
+
+    public HashSet<String> checkMemberNew() {
         HashSet<String> soln = new HashSet<>();
         Statement stmt = null;
         try {
@@ -251,12 +283,11 @@ public class CustomerController extends Controller {
         Statement stmt = null;
         try {
             stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT warehouseID, customerID, startDate FROM RENT");
+            ResultSet rs = stmt.executeQuery("SELECT unitID, customerID FROM RENT");
             while(rs.next()) {
-                String t1 = rs.getString("warehouseID");
+                String t1 = rs.getString("unitID");
                 String t2 = rs.getString("customerID");
-                String t3 = rs.getString("startDate");
-                soln.add(t1+t2+t3);
+                soln.add(t1+t2);
             }
         } catch (SQLException e) {
             e.printStackTrace();

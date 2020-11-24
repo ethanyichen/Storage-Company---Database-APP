@@ -261,6 +261,7 @@ public class EmployeeManagement implements ActionListener {
             if (eSalaryString.matches("[0-9]+") && eSalaryString.length() > 0) {
                 eSalaryIn= Integer.parseInt(eSalaryString);
             }
+            ////
             String addMsg;
             String addMsgID;
             if (eNameIn.equals("")|eSalaryIn==-1) {
@@ -300,19 +301,19 @@ public class EmployeeManagement implements ActionListener {
                 deleteMsg = "Invalid input";
                 deleteConfirmation.setForeground(submitMsgColorRed);
             }
-            else{
-                deleteMsg="Employee with ID " +eIDin+ " successfully deleted from Database.";
+            else {
+                deleteMsg = "Employee with ID " + eIDin + " successfully deleted from Database.";
                 deleteConfirmation.setForeground(submitMsgColorGreen);
-            }
-            try{
-                EmployeeContoller employeeContoller = new EmployeeContoller(db);
-                employeeContoller.delete(eIDin);
-            }catch (EmployeeDeleteException exception) {
-                deleteMsg = "Invalid input. Customer with id " +eIDin +" does not exist";
-                deleteConfirmation.setForeground(submitMsgColorRed);
-                exception.printStackTrace();
-            }catch(ServerErrorException serverErrorException){
-                serverErrorException.printStackTrace();
+                try {
+                    EmployeeContoller employeeContoller = new EmployeeContoller(db);
+                    employeeContoller.delete(eIDin);
+                } catch (EmployeeDeleteException exception) {
+                    deleteMsg = "Invalid input. Customer with id " + eIDin + " does not exist";
+                    deleteConfirmation.setForeground(submitMsgColorRed);
+                    exception.printStackTrace();
+                } catch (ServerErrorException serverErrorException) {
+                    serverErrorException.printStackTrace();
+                }
             }
             deleteConfirmation.setText(deleteMsg);
             eIDDel.setText("");

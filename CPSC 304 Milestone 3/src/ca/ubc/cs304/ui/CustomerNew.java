@@ -129,7 +129,7 @@ public class CustomerNew implements ActionListener {
             choose.addItem(s);
         }
 
-        checkMem = customerController.checkWarehouseMember();
+        checkMem = customerController.checkMemberNew();
 
 
         frame.pack();
